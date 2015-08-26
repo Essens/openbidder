@@ -45,7 +45,7 @@ public class RandomBidInterceptor implements BidInterceptor {
           .setId("1")
           .setImpid(imp.getId())
           .setPrice(price)
-          .setAdm("snippet"));
+          .setAdm("snippet").build());
     }
 
     /**** FIRE NEXT INTERCEPTOR IN THE CHAIN ****/
