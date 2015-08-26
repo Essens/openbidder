@@ -1,0 +1,41 @@
+<page-header title="Preferred Deals"></page-header>
+
+<p ng-show="projectNotFound">Project not found.</p>
+
+<p ng-show="project && !project.authorized">
+You must <a ng-click="project.authorize()">authorize</a>
+    Open Bidder to access Google Compute Engine on your behalf.
+</p>
+
+<div ng-show="project.authorized">
+  <form class="form-horizontal" ng-submit="errors = null; updateDoubleClickPreferredDeals()">
+    <p>Preferred Deals is a feature that allows Ad Exchange sellers to offer inventory to
+    buyers at a fixed, pre-negotiated price before the inventory is made available to
+    other buyers in the general auction.
+    See <a href="https://support.google.com/adxbuyer/topic/2813049?hl=en&ref_topic=2813035" target="_blank">
+    DoubleClick Preferred Deals</a> for more information.</p>
+    <text-input label="Cloud Storage Bucket" ng-model="project.doubleClickPreferredDealsBucket" errors="errors">
+      <help-block>The Cloud Storage bucket where preferred deals are stored.</help-block>
+    </text-input>
+
+    <p class="pull-left">Select Auction Type</p>
+    <div class="controls">
+      <label class="radio">
+        <input type="radio" ng-model="project.auctionType" value ="0"> I want to participate in preferred deals.
+      </label>
+      <label class="radio">
+        <input type="radio" ng-model="project.auctionType" value ="1"> I want to participate in open auction.
+      </label>
+    </div>
+
+    <div class="form-actions">
+      <button type="submit" class="btn btn-primary">Submit</button>
+    </div>
+  </form>
+
+  <div ng-show="isBucketSet">
+    <form class="form-inline" ng-submit="errors = null; uploadPreferredDeals()">
+      <button type="submit" class="btn">Start Upload</button>
+    </form>
+  </div>
+</div>

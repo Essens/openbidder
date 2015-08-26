@@ -1,0 +1,78 @@
+<div>
+  <div class="form-inline instance-table-toolbar">
+    <button type="button"
+            class="btn"
+            ng-class="{disabled: !anyInstancesSelected()}"
+            ng-click="terminateSelectedInstances()">
+      Terminate
+    </button>
+    <select ng-model="machineTypeModel" ng-options="machineType.id as machineType.resourceName for machineType in machineTypes">
+      <option value="">Select instance type</option>
+    </select>
+    <select ng-model="imageModel" ng-options="image.id as image.resourceName for image in images">
+      <option value="">Select image</option>
+    </select>
+    <button ng-show="isBalancer()" type="button" class="btn" ng-click="createInstance()"
+            ng-class="{disabled: !machineTypeModel || !imageModel || zoneUnavailable()}">
+      {{ actionDescription }}
+    </button>
+    <div class="btn-group" ng-show="isBidder()">
+      <button class="btn dropdown-toggle" data-toggle="dropdown"
+              ng-class="{disabled: !machineTypeModel || !imageModel || zoneUnavailable()}">
+        {{ actionDescription }}
+        <span class="caret"></span>
+      </button>
+      <ul class="dropdown-menu">
+        <li>
+          <a ng-click="createInstance()">Use default</a>
+        </li>
+        <li>
+          <a href="#/project/{{ project.resourceName | encodeUri }}/zone/{{ getZoneName() }}/bidderProfile">More options</a>
+        </li>
+      </ul>
+    </div>
+  </div>
+
+  <table class="table table-striped table-bordered table-condensed">
+    <thead>
+    <tr>
+      <th class="span3">
+        <label class="checkbox inline wide-label">
+          <input type="checkbox" ng-model="allSelected" ng-change="toggleAllInstances()">
+          <strong>Name</strong>
+          </input>
+        </label>
+      </th>
+      <th class="span2">Internal IP</th>
+      <th class="span2">External IP</th>
+      <th class="span3">Machine Type</th>
+      <th class="span3">Image</th>
+      <th class="span2">Status</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr ng-repeat="instance in instances">
+      <td>
+        <label class="checkbox inline wide-label">
+          <input type="checkbox" ng-model="instance.selected">
+          <a ng-href="#/project/{{ project.resourceName | encodeUri }}/zone/{{instance.zone | splitAndGet:'/':4 | encodeUri }}/instance/{{ instance.resourceName | encodeUri }}">
+            {{ instance.resourceName }}
+          </a>
+          </input>
+        </label>
+      </td>
+      <td>{{ instance.internalIp }}</td>
+      <td><a ng-href="{{ instance.getStatsLink() }}" target="_blank">{{ instance.externalIp }}</a>
+      </td>
+      <td>{{ instance.getMachineTypeName() }}</td>
+      <td>{{ instance.getImageName() }}</td>
+      <td>
+        <a rel="popover" popover="hover" data-title="Instance Status"
+           data-content="Note: this describes the status of the Compute Engine instance and NOT the status of the bidder or load balancer application. For detailed application status, please ssh into the instance and investigate the log files.">
+          {{ instance.status | titleCase }}
+        </a>
+      </td>
+    </tr>
+    </tbody>
+  </table>
+</div>

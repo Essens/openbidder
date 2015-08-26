@@ -1,0 +1,27 @@
+=====================================================================
+Google Open Bidder
+=====================================================================
+
+The Open Bidder is toolkit for building, deploying and maintaining
+real-time bidders.  For information and documentation see:
+
+https://code.google.com/p/google-open-bidder/
+https://developers.google.com/ad-exchange/rtb/open-bidder/
+
+
+BUILDING NOTES
+=====================================================================
+
+You need: JDK 7, Maven 3.2, Protocol buffers (protoc) 2.6.1.
+Building is supported from the command line with Maven and
+from any IDE that can load Maven projects (on Eclipse, use m2e).
+Some operating systems have some of all of these tools preinstalled,
+but the check the versions: any older releases will NOT work.
+
+Building via Maven will NOT work with JDK 8, because the projects
+use error-prone which is not yet JDK 8-compatible.  You can work
+around this by defining the property m2e.version to any value
+(error-prone doesn't play well with m2e either, and we cannot use
+a proper profile rule for <jdk>!1.8</jdk> because, you guessed,
+this also breaks m2e). JDK 8 support is coming soon for error-prone
+so this hack for non-Eclipse builds should be temporary.

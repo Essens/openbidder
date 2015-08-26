@@ -1,0 +1,19 @@
+
+<datastore-indexes autoGenerate="false">
+
+  <datastore-index kind="AuthorizationToken" ancestor="true">
+    <property name="createdAt" direction="desc"/>
+  </datastore-index>
+
+  <datastore-index kind="Subscriber" ancestor="false">
+    <property name="project" direction="asc"/>
+    <property name="topics" direction="asc"/>
+    <property name="activeSince" direction="asc"/>
+  </datastore-index>
+
+  <datastore-index kind="Subscriber" ancestor="false">
+    <property name="project" direction="asc"/>
+    <property name="activeSince" direction="asc"/>
+  </datastore-index>
+
+</datastore-indexes>

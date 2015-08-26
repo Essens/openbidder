@@ -1,0 +1,70 @@
+/*
+ * Copyright 2012 Google Inc. All Rights Reserved.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
+package com.google.openbidder.ui.compute.exception;
+
+import static com.google.common.base.Preconditions.checkNotNull;
+
+import com.google.openbidder.ui.compute.ComputeResourceType;
+import com.google.openbidder.ui.compute.ResourceName;
+
+import javax.annotation.Nullable;
+
+/**
+ * Parent exception for errors with a Compute Engine resource.
+ */
+public class ComputeResourceException extends ComputeEngineException {
+
+  private final ComputeResourceType resourceType;
+  private final @Nullable String resourceName;
+
+  public ComputeResourceException(
+      String apiProjectId,
+      ComputeResourceType resourceType,
+      @Nullable String resourceName) {
+
+    this(/* message */ null, apiProjectId, resourceType, resourceName);
+  }
+
+  public ComputeResourceException(
+      String message,
+      ResourceName resourceName) {
+
+    this(message,
+        resourceName.getApiProjectId(),
+        resourceName.getResourceType(),
+        resourceName.getResourceName());
+  }
+
+  public ComputeResourceException(
+      String message,
+      String apiProjectId,
+      ComputeResourceType resourceType,
+      @Nullable String resourceName) {
+
+    super(message, apiProjectId);
+    this.resourceType = checkNotNull(resourceType);
+    this.resourceName = resourceName;
+  }
+
+  public ComputeResourceType getResourceType() {
+    return resourceType;
+  }
+
+  public @Nullable String getResourceName() {
+    return resourceName;
+  }
+}

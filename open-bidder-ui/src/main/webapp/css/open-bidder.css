@@ -1,0 +1,97 @@
+body {
+  padding-top: 60px;
+}
+
+div.alert pre {
+  display: none;
+}
+
+.table td {
+  vertical-align: baseline;
+}
+
+tr.authorized .unauthorized,
+tr.unauthorized .authorized {
+  display: none;
+}
+
+#user-list select, #user-list input {
+  margin-top: 0;
+  margin-bottom: 0;
+}
+
+#new-user-template,
+#loading-message,
+.template {
+  display: none;
+}
+
+a.default-project {
+  display: none;
+}
+
+#project-list i.default-project {
+  display: none;
+}
+
+#project-list tr.default-project i.default-project {
+  display: inline-block;
+}
+
+.messages {
+  display: none;
+}
+
+#firewall-content, #network-content {
+  display: none;
+}
+
+.network-name, .firewall-name {
+  font-weight: bold;
+}
+
+#zones,
+#quotas {
+  display: none;
+}
+
+.footer {
+  padding-top: 10px;
+  font-size: x-small;
+  text-align: center;
+}
+
+.accordion-group {
+	border: 0px;
+}
+
+.accordion-caret .accordion-heading:not(.collapsed):before {
+  content: "\25BC";
+  margin-right: 0px;
+}
+.accordion-caret .accordion-heading.collapsed:before {
+  content: "\25B6";
+  margin-right: 0px;
+}
+
+.center {
+  text-align: center !important;
+}
+
+#quotas .bar-description {
+  float: left;
+  width: 240px;
+  text-align: left;
+  font-size: small;
+}
+
+#quotas .bar-text {
+  position: absolute;
+  left: 55%;
+}
+
+#my-ip-address .ip-input {
+  font-size: 11px;
+  height: 12px;
+  margin-bottom: 0;
+}

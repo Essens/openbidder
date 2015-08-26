@@ -1,0 +1,94 @@
+<page-header title="Network and Firewalls"></page-header>
+
+<p ng-show="projectNotFound">Project not found.</p>
+
+<p ng-show="project && !project.authorized">
+  You must <a ng-click="project.authorize()">authorize</a>
+  Open Bidder to access Google Compute Engine on your behalf.
+</p>
+
+<div ng-show="project.authorized">
+  <p>The Open Bidder creates a Google Compute network, for each project. This enables one API
+  account to have multiple, isolated, environments, such as production, development and testing.
+  Each network is bootstrapped with the default Open Bidder firewall rules. Further firewall
+  rules must be defined by the user. See the
+  <a href="https://cloud.google.com/compute/docs/networking" target="_blank">Google Compute documentation</a>
+  on network and firewalls for more information.</p>
+
+  <table>
+    <tr>
+      <td><button type="button" class="btn" ng-click="getRemoteIp()">Get Remote IP Address</button></td>
+      <td><label>{{ remoteIpAddress }}</label></td>
+    </tr>
+  </table>
+
+  <p>To view metrics on the bidders and load balancers and to SSH into those instances you will need
+  to white-list appropriate IP ranges.</p>
+
+  <form class="form-horizontal" ng-show="project" ng-submit="errors = null; configureNetwork()">
+    <text-area label="White-listed IP ranges" rows="6" ng-model="whiteListedIpRanges"></text-area>
+    <text-input label="Load Balancer Port" read-only="networks.length" ng-model="project.loadBalancerRequestPort"></text-input>
+    <text-input label="Bidder Port" read-only="networks.length" ng-model="project.bidderRequestPort"></text-input>
+    <div class="form-actions">
+      <button type="submit" class="btn btn-primary" ng-class="{disabled: !project || project.networkConfigInProgress}">Configure Network</button>
+    </div>
+  </form>
+
+  <div ng-show="networks">
+    <h3>Networks</h3>
+    <table id="networks" class="table table-striped table-bordered table-condensed">
+      <thead>
+      <tr>
+        <th class="span6">Name</th>
+        <th class="span4">White-Listed IP Ranges</th>
+        <th class="span2">IPv4 Range</th>
+      <tr>
+      </thead>
+      <tbody>
+      <tr ng-repeat="network in networks">
+        <td>
+          <div class="network-name">{{ network.resourceName }}</div>
+          <div class="network-description">{{ network.description }}</div>
+        </td>
+        <td>
+          <div ng-repeat="ipRange in network.whiteListedIpRanges">{{ ipRange }}</div>
+        </td>
+        <td class="network-range">{{ network.ipv4Range }}</td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div ng-show="firewalls">
+    <h3>Firewalls</h3>
+    <table id="firewalls" class="table table-striped table-bordered table-condensed">
+      <thead>
+      <tr>
+        <th class="span6">Name</th>
+        <th class="span2">Source</th>
+        <th class="span2">Target</th>
+        <th class="span2">Ports</th>
+      <tr>
+      </thead>
+      <tbody>
+      <tr ng-repeat="firewall in firewalls">
+        <td>
+          <div class="firewall-name">{{ firewall.resourceName }}</div>
+          <div class="firewall-description">{{ firewall.description }}</div>
+        </td>
+        <td class="firewall-source">
+          <div ng-repeat="sourceTag in firewall.sourceTags">{{ sourceTag }}</div>
+          <div ng-repeat="sourceRange in firewall.sourceRanges">{{ sourceRange }}</div>
+        </td>
+        <td class="firewall-target">
+          <div ng-repeat="targetTag in firewall.targetTags">{{ targetTag }}</div>
+        </td>
+        <td class="firewall-ports">
+          <div ng-repeat="allowed in firewall.allowed">{{ allowed.protocol }}: {{ allowed.ports.join(', ') }}</div>
+        </td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
+
+</div>

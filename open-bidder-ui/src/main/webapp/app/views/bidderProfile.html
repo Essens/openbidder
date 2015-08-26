@@ -1,0 +1,21 @@
+<page-header title="Bidder Profile"></page-header>
+
+<select ng-model="machineTypeModel" ng-options="machineType.id as machineType.resourceName for machineType in machineTypes">
+  <option value="">Select instance type</option>
+</select>
+<select ng-model="imageModel" ng-options="image.id as image.resourceName for image in images">
+  <option value="">Select image</option>
+</select>
+<text-area label="Main Parameters"
+           rows="6"
+           ng-model="mainParameters"
+           as-array="false"
+           errors="errors">
+</text-area>
+<button type="button" class="btn" ng-click="createCustomBidder()"
+        ng-class="{disabled: !machineTypeModel || !imageModel}">
+  Start Bidder
+</button>
+<button type="button" class="btn" ng-click="goBack()">
+  Back
+</button>

@@ -1,0 +1,114 @@
+<page-header title="Zone {{ routeParams.zoneId }}"></page-header>
+
+<p ng-show="projectNotFound">Project not found.</p>
+
+<p ng-show="zoneNotFound">Zone not found.</p>
+
+<p ng-show="project && !project.apiProjectAuthorized">
+  Your Google API Project ID is incorrect or you do not have access to it. Verify the
+  <a ng-href="#/project/{{ project.resourceName | encodeUri }}">project details</a> or check the
+  <a href="https://console.developers.google.com/project/{{ project.apiProjectId}}" target="_blank">
+  Google Developers Console</a>.
+</p>
+
+<div ng-show="zoneFound">
+
+  <h3>Scheduled Outages</h3>
+  <p ng-hide="zone.scheduledOutages">There are no scheduled outages.</p>
+  <table class="outages table table-striped table-bordered table-condensed" ng-show="zone.scheduledOutages">
+    <thead>
+    <tr>
+      <th class="span3">Name</th>
+      <th class="span3">Description</th>
+      <th class="span3">Begin Time</th>
+      <th class="span3">End Time</th>
+    <tr>
+    </thead>
+    <tbody>
+    <tr ng-repeat="outage in zone.scheduledOutages">
+      <td class="outage-name">{{ outage.name }}</td>
+      <td class="outage-description">{{ outage.description }}</td>
+      <td class="outage-begin">{{ outage.beginTime | gmt }}</td>
+      <td class="outage-end">{{ outage.endTime | gmt }}</td>
+    </tr>
+    </tbody>
+  </table>
+
+  <div class="accordion-group accordion-caret">
+    <h3 class="accordion-heading collapsed" data-toggle="collapse" href="#Hostname">Zone Host Name</h3>
+    <div id="Hostname" class="collapse accordion-body">
+      <p>There should be an A record for each load balancer that links that load balancer's
+        external IP to the zone's host name. This host name will be the one registered with the
+        DoubleClick Ad Exchange and will be used in the impression and click callbacks handled by
+        the Open Bidder.  Once the zone is registered, updating zone host is not allowed.  Please unregister
+        the zone before the update.</p>
+      <form class="form-inline" ng-submit="errors = null; update()">
+        <input type="text" placeholder="Zone host name" ng-model="zone.hostName" class="input-long">
+        <button type="submit" ng-class="{disabled: zone.isRegistered}" class="btn">Update Host Name</button>
+      </form>
+      <p ng-show="zone.hostName">Request URL:</p>
+      <pre ng-show="zone.hostName"><code>http://{{ zone.hostName }}:{{ project.loadBalancerRequestPort }}/bid_request/doubleclick</code></pre>
+    </div>
+  </div>
+  <div class="accordion-group accordion-caret">
+    <h3 class="accordion-heading collapsed" data-toggle="collapse" href="#Registration">Registration</h3>
+    <div id="Registration" class="collapse accordion-body">
+      <p ng-show="!project.adExchangeBuyerAccount">Please set your Ad Exchange Buyer Account in
+        the <a ng-href="#/project/{{ project.resourceName | encodeUri }}">Edit Project</a> page before you proceed.</p>
+      <div ng-show="project.adExchangeBuyerAccount">
+        <p >You need to register your bidding zone with the DoubleClick Ad Exchange to begin receiving bid requests.</p>
+        <form class="form-horizontal">
+          <text-input label="Maximum QPS" ng-model="zone.maxBidRequestQps" errors="errors">
+            <help-block>The maximum queries per second that Ad Exchange should send to each individual
+              bidder URL for this account.</help-block>
+          </text-input>
+          <button type="submit" class="btn" ng-class="{disabled: zone.isRegistered}" ng-click="registerZone()">Register</button>
+          <button type="submit" class="btn" ng-class="{disabled: !zone.isRegistered}" ng-click="unregisterZone()">Unregister</button>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <p ng-show="!project.userDistUri">Please set your Cloud Storage URI in
+    the <a ng-href="#/project/{{ project.resourceName | encodeUri }}">Edit Project</a> page
+    / Configure Bidders, before you can manage your bidders and load balancers.</p>
+  <div ng-show="project.userDistUri">
+    <h3>Load Balancers</h3>
+    <p>
+      Load balancers running in this zone. Each balancer will automatically register all bidders,
+      but this may take a few minutes after bidders are changed (see the balancer's Backends, in
+      the stats page accessible from their External IP link).
+    </p>
+    <instance-table
+        project="project"
+        zone="zone"
+        action-description="Add Load Balancer"
+        instance-type="InstanceType.BALANCER"
+        instances="balancers"
+        machine-type-model="defaultLoadBalancerMachineType"
+        machine-types="machineTypes"
+        image-model="project.loadBalancerImage"
+        images="images">
+    </instance-table>
+
+    <h3>Bidders</h3>
+    <p>
+      Bidders running in this zone.
+    </p>
+    <p><span class="label label-warning">Note</span>
+      Modifying the bidder configuration under the Project will not affect running bidders.
+      After making a change then you must terminate running bidders and launch new ones.
+    </p>
+    <instance-table
+        project="project"
+        zone="zone"
+        action-description="Add Bidder"
+        instance-type="InstanceType.BIDDER"
+        instances="bidders"
+        machine-type-model="defaultBidderMachineType"
+        machine-types="machineTypes"
+        image-model="project.bidderImage"
+        images="images">
+    </instance-table>
+  </div>
+</div>

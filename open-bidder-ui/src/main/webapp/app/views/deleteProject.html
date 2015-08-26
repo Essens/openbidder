@@ -1,0 +1,24 @@
+<page-header title="Delete Project {{ project.description }}"></page-header>
+
+<div ng-show="projectCheckComplete">
+  <p ng-show="!project">Project not found.</p>
+
+  <div ng-show="project && !project.isOwner()">
+    <p>You must be an owner of this project to delete it.
+  </div>
+  <div ng-show="project.isOwner()">
+    <p>Deleting a project will clear it from the Open Bidder UI and remove the
+    Google Compute Engine network and firewall. Additional project state stored
+    on other Google services, such as Cloud Storage, must be removed manually.
+    A project can not be deleted if it has bidders, load balancers, or manually
+    created instance running on it's network.</p>
+    <p><span class="label label-warning">Note</span> If you have ever retrieved OAuth2 tokens for this
+    project and created Google Compute Engine resources, then you must currently be authorized
+    so they may be removed.</p>
+    <form class="form-horizontal" ng-submit="errors = null; deleteProject()">
+      <div class="form-actions">
+        <button type="submit" class="btn btn-danger">Delete Project</button>
+      </div>
+    </form>
+  </div>
+</div>

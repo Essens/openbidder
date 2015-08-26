@@ -1,0 +1,27 @@
+// Copyright 2014 Google Inc. All Rights Reserved.
+//
+// Protobuf messages for the Open Bidder Deals.
+//
+syntax = "proto2";
+package com.google.openbidder.deals.model;
+
+/**
+ * The configuration data that represent an Ad Exchange Preferred Deal.
+ */
+message PreferredDeal {
+  // Deal ID.
+  optional uint64 deal_id = 1;
+
+  // The account ID of the buyer this deal is for.
+  optional int32 account_id = 2;
+
+  // The fixed price in cpm micros for this preferred deal.
+  optional uint64 fixed_cpm = 3;
+
+  // The name of the publisher offering this preferred deal.
+  // See seller-network-ids.txt file in the technical documentation for a list of ids.
+  optional string seller_network = 4;
+
+  // The name of the advertiser this deal is for.
+  optional string advertiser_name = 5;
+}

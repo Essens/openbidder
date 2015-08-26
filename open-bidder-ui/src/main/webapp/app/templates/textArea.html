@@ -1,0 +1,14 @@
+<div ng-class="{error: errors[modelName].messageType == 'ERROR'}" class="control-group">
+  <label for="{{ modelName }}" class="control-label">{{ label }}</label>
+  <div class="controls" ng-trasclude>
+    <textarea id="{{ modelName }}"
+              name="{{ modelName }}"
+              rows="{{ rows | default:1 }}"
+              cols="{{ cols | default:1 }}"
+              class="span7"
+              edit-list="{{ asArray | default:false }}"
+              ng-model="ngModel"></textarea>
+    <span ng-repeat="message in errors[modelName].messages" class="help-inline">{{ message }}</span>
+    <div ng-transclude></div>
+  </div>
+</div>

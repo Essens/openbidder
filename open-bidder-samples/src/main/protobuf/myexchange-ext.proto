@@ -1,0 +1,21 @@
+syntax = "proto2";
+package com.google.openbidder.sample.openrtbexchange.model;
+option java_outer_classname = "MyExt";
+
+import "openrtb.proto";
+
+//
+// OpenRTB Extensions for MyOpenRtbExchange (ID=155).
+//
+
+message Banner {
+  /**
+   * This exchange supports a revolutionary new feature, Circular Ads!
+   * Banner impressions have to provide the radius for the ad slot.
+   */
+  required int32 radius = 1;
+}
+
+extend com.google.openrtb.BidRequest.Imp.Banner {
+  optional Banner banner = 155;
+}

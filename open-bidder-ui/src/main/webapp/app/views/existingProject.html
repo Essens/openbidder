@@ -1,0 +1,217 @@
+<page-header title="Edit Project"></page-header>
+
+<p ng-show="projectNotFound">Project not found.</p>
+
+<div ng-show="project">
+  <div class="accordion-group accordion-caret">
+    <h3 class="accordion-heading collapsed" data-toggle="collapse" href="#Step1">
+      Step 1: Connect to your Google API Project</h3>
+    <div id="Step1" class="collapse accordion-body">
+      <form class="form-horizontal" ng-show="project" ng-submit="updateProjectConfig()">
+        <ng-include src="'/app/views/project.html'"></ng-include>
+        <div class="form-actions">
+          <button type="submit" class="btn btn-primary" ng-class="{disabled: !project}">
+            Update API Project</button>
+        </div>
+      </form>
+    </div>
+  </div>
+  <div class="accordion-group accordion-caret">
+    <h3 class="accordion-heading collapsed" data-toggle="collapse" href="#Step2">
+      Step 2: Authorize Open Bidder</h3>
+    <div id="Step2" class="collapse accordion-body">
+      <p>Open Bidder requires OAuth 2.0 credentials to act on your behalf to:</p>
+      <ul>
+        <li>Retrieve bidding reports from DoubleClick Ad Exchange</li>
+        <li>Start, stop and query bidders and load balancers on Google Compute Engine</li>
+      </ul>
+      <div class="form-actions">
+        <a ng-click="project.authorize()"
+           class="btn btn-primary"
+           ng-class="{disabled: project.authorized || !project.canAuthorize()}">Authorize</a>
+        <button type="button"
+                ng-click="revokeTokens()"
+                class="btn"
+                ng-class="{disabled: !project.authorized}">Revoke Tokens</button>
+      </div>
+    </div>
+  </div>
+  <div ng-show="project.authorized">
+    <div class="accordion-group accordion-caret">
+      <h3 class="accordion-heading collapsed" data-toggle="collapse" href="#Step3">
+        Step 3: Configure DoubleClick Integration</h3>
+      <div id="Step3" class="collapse accordion-body">
+        <form class="form-horizontal" ng-submit="updateDoubleClickConfig()">
+          <text-input label="Encryption Key" ng-model="project.doubleClickProjectResource.encryptionKey" errors="errors">
+            <help-block>The encryption key used to decode winning prices,
+              in Base64 format. This key is used by bidders for impression tracking.
+              Updating this key requires bidders to be terminated and started again.</help-block>
+          </text-input>
+          <text-input label="Integrity Key" ng-model="project.doubleClickProjectResource.integrityKey" errors="errors">
+            <help-block>The integrity key used to decode winning prices,
+              in Base64 format. This key is used by bidders for impression tracking.
+              Updating this key requires bidders to be terminated and started again.</help-block>
+          </text-input>
+          <div ng-class="{error: errors[modelName].messageType == 'ERROR'}" class="control-group">
+            <label for="adExchangeBuyerAccount" class="control-label">Buyer Account</label>
+            <div class="controls">
+              <select id="adExchangeBuyerAccount"
+                      name="adExchangeBuyerAccount"
+                      ng-model="project.adExchangeBuyerAccount"
+                      class="span7"
+                      type="text"
+                      ng-readonly="readOnly"
+                      ng-options="account.id as account.resourceName for account in accounts">
+                <option value="">Please select a Buyer Account</option>
+              </select>
+              <span ng-repeat="message in errors[modelName].messages" class="help-inline">{{ message }}</span>
+              <help-block>DoubleClick Ad Exchange Buyer account for registering running bidders
+                to configure quota. Please ask your Ad Exchange Technical Manager or see
+                <a href="https://developers.google.com/ad-exchange/buyer-rest/" target="_blank">
+                Ad Exchange Buyer API</a> for more details.
+              </help-block>
+            </div>
+          </div>
+          <text-input label="Cookie Match URL"
+                      ng-model="project.cookieMatchUrl"
+                      ng-disabled="!project.adExchangeBuyerAccount"
+                      ng-readonly="readOnly"
+                      errors="errors">
+            <help-block>Cookie matching URL prefix. This is tied to the selected Buyer Account.</help-block>
+          </text-input>
+          <text-input label="Cookie Match NID"
+                      ng-model="project.cookieMatchNid"
+                      ng-disabled="!project.adExchangeBuyerAccount"
+                      ng-readonly="readOnly"
+                      errors="errors">
+            <help-block>Cookie matching NID. This is tied to the selected Buyer Account.</help-block>
+          </text-input>
+          <div class="form-actions">
+            <button type="submit" class="btn btn-primary">Update Project</button>
+          </div>
+        </form>
+      </div>
+	  </div>
+	  <div class="accordion-group accordion-caret">
+      <h3 class="accordion-heading collapsed" data-toggle="collapse" href="#Step4">
+        Step 4: Configure Load Balancers</h3>
+      <div id="Step4" class="collapse accordion-body">
+        <p>Changing any property here will not reconfigure existing load balancers.
+          You should create new balancers to pick up new configurations.</p>
+        <form class="form-horizontal" ng-submit="updateLoadBalancerConfig()">
+          <text-area label="Additional Load Balancer Oauth2 Scopes"
+                     rows="3"
+                     ng-model="project.loadBalancerOauth2Scopes"
+                     as-array="true"
+                     errors="errors">
+            <help-block>A list of additional Google API Oauth2 scopes (one per line)
+              that will be added to load balancer instances.  Load balancers will use
+              these scopes to access other Google services.  Read access to Google Compute
+              and Google Cloud Storage are provided by default.
+              See <a href="https://cloud.google.com/compute/docs/authentication" target="_blank">
+              Authenticating from Google Compute Engine</a> for more details.</help-block>
+          </text-area>
+          <div class="form-actions">
+            <button type="submit" class="btn btn-primary">Update Project</button>
+          </div>
+        </form>
+      </div>
+    </div>
+    <div class="accordion-group accordion-caret">
+      <h3 class="accordion-heading collapsed" data-toggle="collapse" href="#Step5">
+        Step 5: Configure Bidders</h3>
+      <div id="Step5" class="collapse accordion-body">
+        <p>Changing any property here will not reconfigure existing bidders.
+          You should create new bidders to pick up new configurations.</p>
+        <form class="form-horizontal" ng-submit="updateBidderConfig()">
+          <text-input label="Cloud Storage URI" ng-model="project.userDistUri" errors="errors">
+            <help-block>Google Cloud Storage URI for custom distribution files. The command line tool
+              <a href="https://cloud.google.com/storage/docs/gsutil" target="_blank">gsutil</a> can be used to
+              upload jar files, which will be downloaded and added to the bidders' classpath.
+            </help-block>
+          </text-input>
+          <text-area label="VM Parameters"
+                     rows="6"
+                     ng-model="project.vmParameters"
+                     as-array="false"
+                     errors="errors">
+            <help-block>OpenJDK VM parameters passed to the Open Bidder process.
+              Can be used for tuning JVM parameters such as heap size.</help-block>
+          </text-area>
+          <text-area label="Main Parameters"
+                     rows="6"
+                     ng-model="project.mainParameters"
+                     as-array="false"
+                     errors="errors">
+            <help-block>Custom main parameters passed to the Open Bidder process.
+              Can be used to set properties available to the bidder core or to interceptors.</help-block>
+          </text-area>
+          <text-area label="Additional Bidder Oauth2 Scopes"
+                     rows="6"
+                     ng-model="project.bidderOauth2Scopes"
+                     as-array="true"
+                     errors="errors">
+            <help-block>A list of additional Google API Oauth2 scopes (one per line)
+              that will be added to bidder instances.  Bidders will use these scopes
+              to access other Google services.  Read and write access for Google Cloud Storage
+              are provided by default.
+              See <a href="https://cloud.google.com/compute/docs/authentication" target="_blank">
+              Authenticating from Google Compute Engine</a> for more details.</help-block>
+          </text-area>
+          <div class="form-actions">
+            <button type="submit" class="btn btn-primary">Update Project</button>
+          </div>
+        </form>
+      </div>
+    </div>
+    <div class="accordion-group accordion-caret">
+      <h3 class="accordion-heading collapsed" data-toggle="collapse" href="#Step6">
+        Step 6: Configure Interceptors</h3>
+      <div id="Step6" class="collapse accordion-body">
+        <p>Changing any property here will not reconfigure existing bidders. You should create
+          new bidders to pick up new configurations.</p>
+        <form class="form-horizontal" ng-submit="updateInterceptorConfig()">
+          <text-area label="Bid Interceptors"
+                     rows="6"
+                     ng-model="project.bidInterceptors"
+                     as-array="true"
+                     errors="errors">
+            <help-block>A list of fully-qualified class names of bidder interceptors, with one per
+              line (at least one required).  These interceptors are loaded by the bidders.
+              Updating this list requires bidders to be terminated and started again.</help-block>
+          </text-area>
+          <text-area label="Impression Interceptors"
+                     rows="6"
+                     as-array="true"
+                     ng-model="project.impressionInterceptors"
+                     errors="errors">
+            <help-block>A list of fully-qualified class names of impression tracking interceptors,
+              with one per line.  These interceptors are loaded by the bidders.
+              Updating this list requires bidders to be terminated and started again.</help-block>
+          </text-area>
+          <text-area label="Click Interceptors"
+                     rows="6"
+                     as-array="true"
+                     ng-model="project.clickInterceptors"
+                     errors="errors">
+            <help-block>A list of fully-qualified class names of click tracking interceptors,
+              with one per line.  These interceptors are loaded by the bidders.
+              Updating this list requires bidders to be terminated and started again.</help-block>
+          </text-area>
+          <text-area label="Pixel Matching Interceptors"
+                     rows="6"
+                     ng-model="project.matchInterceptors"
+                     as-array="true"
+                     errors="errors">
+            <help-block>A list of fully-qualified class names of pixel-matching interceptors,
+              with one per line.  These interceptors are loaded by the bidders.
+              Updating this list requires bidders to be terminated and started again.</help-block>
+          </text-area>
+          <div class="form-actions">
+            <button type="submit" class="btn btn-primary">Update Project</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

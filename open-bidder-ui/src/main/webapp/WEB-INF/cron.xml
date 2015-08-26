@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<cronentries>
+  <cron>
+    <url>/cron/subscription-cleanup</url>
+    <description>Cleanup subscriptions more than 2 hours old</description>
+    <schedule>every 5 minutes</schedule>
+  </cron>
+
+  <cron>
+    <!--to start the cron job for uploading preferred deals for a project-->
+    <!--set the url to be /cron/preferred-deals-update/{projectId}-->
+    <url>/cron/preferred-deals-update/001</url>
+    <description>Update Preferred Deals every 2 hours</description>
+    <schedule>every 2 hours</schedule>
+  </cron>
+</cronentries>

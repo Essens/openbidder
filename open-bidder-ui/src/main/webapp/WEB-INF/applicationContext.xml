@@ -1,0 +1,154 @@
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:util="http://www.springframework.org/schema/util"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans-4.1.xsd
+        http://www.springframework.org/schema/context
+        http://www.springframework.org/schema/context/spring-context-4.1.xsd
+        http://www.springframework.org/schema/util
+        http://www.springframework.org/schema/util/spring-util-4.1.xsd">
+
+  <context:annotation-config />
+  <context:property-placeholder location="classpath:open-bidder-ui.properties" />
+
+  <bean class="com.google.openbidder.ui.compute.BidderInstanceBuilder" />
+  <bean class="com.google.openbidder.ui.compute.FirewallBuilder" />
+  <bean class="com.google.openbidder.ui.compute.LoadBalancerInstanceBuilder" />
+  <bean class="com.google.openbidder.ui.compute.NetworkBuilder" />
+
+  <bean id ="adExchangeBuyerApiService"
+        class="com.google.openbidder.ui.adexchangebuyer.impl.AdExchangeBuyerServiceImpl" />
+  <bean class="com.google.openbidder.ui.user.impl.AuthorizationServiceImpl" />
+  <bean id="computeService"
+        class="com.google.openbidder.ui.compute.impl.ComputeServiceImpl" />
+  <bean id="notificationService"
+        class="com.google.openbidder.ui.notify.impl.NotificationServiceImpl" />
+  <bean class="com.google.openbidder.ui.preferreddeals.impl.PreferredDealsServiceImpl" />
+  <bean class="com.google.openbidder.ui.project.impl.ProjectServiceImpl" />
+  <bean class="com.google.openbidder.ui.resource.impl.AccountResourceServiceImpl" />
+  <bean class="com.google.openbidder.ui.resource.impl.CustomImageResourceServiceImpl" />
+  <bean class="com.google.openbidder.ui.resource.impl.FirewallResourceServiceImpl" />
+  <bean class="com.google.openbidder.ui.resource.impl.InstanceResourceServiceImpl" />
+  <bean class="com.google.openbidder.ui.resource.impl.DefaultImageResourceServiceImpl" />
+  <bean class="com.google.openbidder.ui.resource.impl.MachineTypeResourceServiceImpl" />
+  <bean class="com.google.openbidder.ui.resource.impl.NetworkResourceServiceImpl" />
+  <bean class="com.google.openbidder.ui.resource.impl.RegionResourceServiceImpl" />
+  <bean class="com.google.openbidder.ui.resource.impl.ReportResourceServiceImpl" />
+  <bean class="com.google.openbidder.ui.resource.impl.RemarketingResourceServiceImpl" />
+  <bean class="com.google.openbidder.ui.resource.impl.QuotaResourceServiceImpl" />
+  <bean class="com.google.openbidder.ui.resource.impl.ProjectResourceServiceImpl" />
+  <bean class="com.google.openbidder.ui.resource.impl.UserResourceServiceImpl" />
+  <bean class="com.google.openbidder.ui.resource.impl.ZoneResourceServiceImpl" />
+  <bean id="storageService"
+        class="com.google.openbidder.ui.cloudstorage.impl.StorageServiceImpl" />
+  <bean class="com.google.openbidder.ui.user.impl.UserIdServiceImpl" />
+
+  <bean class="com.google.openbidder.ui.dao.impl.ProjectDaoMigrator" />
+  <bean class="com.google.openbidder.ui.dao.impl.SubscriberDaoImpl" />
+  <bean class="com.google.openbidder.ui.dao.impl.UserPreferenceDaoImpl" />
+
+  <bean id="clock" class="com.google.openbidder.util.SystemClock" />
+
+  <bean class="com.google.openbidder.ui.compute.BidderParameters" />
+  <bean class="com.google.openbidder.ui.compute.LoadBalancerParameters" />
+
+  <!-- JSON factory -->
+  <bean id="jacksonFactory" class="com.google.api.client.json.jackson2.JacksonFactory" />
+
+  <!-- HTTP Transport -->
+  <bean id="httpTransport" class="com.google.api.client.http.javanet.NetHttpTransport" />
+
+  <!-- Converter for Cloud Storage DAO -->
+  <bean class="com.google.openbidder.storage.utils.ProtobufConverter" />
+
+  <!-- required OAuth2 scopes -->
+  <util:list id="scopes">
+    <!-- Use this to verify that the email given matches the user ID in AppEngine -->
+    <value>${OAuth.Scope.UserInfo}</value>
+
+    <!-- Google Cloud Storage -->
+    <value>${OAuth.Scope.CloudStorage}</value>
+
+    <!-- Google Compute -->
+    <util:constant static-field="com.google.api.services.compute.ComputeScopes.COMPUTE" />
+
+    <!-- Google Ad Exchange Buyer -->
+    <util:constant static-field="com.google.api.services.adexchangebuyer.AdExchangeBuyerScopes.ADEXCHANGE_BUYER" />
+
+    <!-- Adwords API -->
+    <value>${OAuth.Scope.Adwords}</value>
+  </util:list>
+
+  <!-- OAuth2 scopes that the bidder instances on Google Compute require -->
+  <util:list id="defaultBidderScopes">
+    <!-- Google Cloud Storage -->
+    <value>${OAuth.Scope.CloudStorage}</value>
+
+    <!-- Google Cloud Logging -->
+    <value>${OAuth.Scope.CloudLogging}</value>
+  </util:list>
+
+  <util:list id="defaultLoadBalancerScopes">
+    <!-- Google Compute to build the list of bidders -->
+    <value>${OAuth.Scope.Compute.ReadWrite}</value>
+
+    <!-- Google Cloud Storage -->
+    <value>${OAuth.Scope.CloudStorage.ReadOnly}</value>
+
+    <!-- Google Cloud Logging -->
+    <value>${OAuth.Scope.CloudLogging}</value>
+  </util:list>
+
+  <!-- what Google Compute Engine quotas to display on the bidder management page -->
+  <util:set id="visibleQuotas">
+    <value>NETWORKS</value>
+    <value>FIREWALLS</value>
+  </util:set>
+
+  <util:set id="visibleRegionalQuotas">
+    <value>CPUS</value>
+  </util:set>
+
+  <!-- Default Interceptors to be used by bidders -->
+  <util:list id="defaultBidInterceptors">
+  </util:list>
+
+  <util:list id="defaultImpressionInterceptors">
+  </util:list>
+
+  <util:list id="defaultClickInterceptors">
+  </util:list>
+
+  <util:list id="defaultMatchInterceptors">
+  </util:list>
+
+  <bean class="com.fasterxml.jackson.databind.ObjectMapper" />
+
+  <util:list id="entities">
+    <value>com.google.openbidder.ui.entity.AuthorizationToken</value>
+    <value>com.google.openbidder.ui.entity.Project</value>
+    <value>com.google.openbidder.ui.entity.Subscriber</value>
+    <value>com.google.openbidder.ui.entity.UserPreference</value>
+  </util:list>
+
+  <util:list id="translatorFactories">
+  </util:list>
+
+  <bean id="objectifyFactory" class="com.google.openbidder.ui.util.db.SpringObjectifyFactory">
+    <property name="entityClasses" ref="entities" />
+    <property name="translatorFactories" ref="translatorFactories" />
+  </bean>
+
+  <bean class="com.google.appengine.api.users.UserServiceFactory"
+        factory-method="getUserService" />
+
+  <bean class="com.google.appengine.api.channel.ChannelServiceFactory"
+        factory-method="getChannelService" />
+
+  <bean class="com.google.appengine.api.memcache.MemcacheServiceFactory"
+        factory-method="getMemcacheService" />
+
+  <bean class="com.google.openbidder.ui.util.DaoFactory" />
+
+</beans>

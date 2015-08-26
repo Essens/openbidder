@@ -1,0 +1,114 @@
+10 Tumri
+43 BrightRoll
+56 Efficient Frontier
+60 InsightExpress
+63 Invite Media
+94 Nielsen OBE (Vizu) - Survey
+97 DoubleClick Video
+100 PointRoll Video
+101 EyeWonder Video
+113 Image & Flash (gif, jpg, png, swf)
+118 Dimestore (GFK)
+126 AdShuffle
+128 Aunica
+130 Broadband Enterprises
+132 Adlens
+144 Campaign Monitor (Integral Ad Science)
+145 DoubleVerify
+156 Spartoo
+182 comScore - vCE
+195 Netmining Video
+204 Pulpo Media
+220 TubeMogul Video
+225 Zanox
+232 comScore - CE
+233 Media Innovation Group (Xaxis)
+237 Reddion
+238 Aggregate Knowledge
+260 Alenty
+285 Simpli.fi
+297 VAST Certification Test
+307 MaxPoint Interactive Video
+308 Turn Video
+310 AdoTube Video
+311 Adconion Video
+312 BrightRoll Video
+313 LiveRail
+314 Videology Video
+317 Yume Video
+318 Vindico Video
+328 Adtech Video
+329 Pipewave
+331 Avail Intelligence
+334 Adloox
+337 SundaySky Video
+342 Adledge
+394 AppNexus
+395 Adnologies
+399 Media6Degrees Video
+407 Adrime Video
+408 Adform DSP Video
+409 Adform Video
+410 Mediamind (Sizmek) Video
+414 Batch Media
+431 RadiumOne Video
+432 Hi-Media
+441 Hubrus
+443 Telemetry Video
+445 Project SunBlock
+446 Innovid Video
+450 Adfox Video
+451 AdMaxim Video
+452 Collective Media Video
+453 EyeView Video
+454 Flashtalking Video
+455 FreeWheel Video
+456 GPM-Digital Video
+457 Jivox Video
+458 Massmotionmedia Video
+459 Next Performance Video
+460 Oggifinogi Video
+461 OpenX Enterprise Video
+462 Specific Media Video
+463 SpotXchange Video
+464 The Trade Desk Video
+465 VideoHub Video
+466 Videostrip Video
+468 Struq Video
+469 Innity Video
+470 Audience Science Video
+471 Movad Video
+478 AdMotion
+479 eyeReturn Video
+480 Extreme Reach
+485 comScore - VoiceFive
+488 DYNADMIC SAS
+489 Revenue Cloud
+491 Bidtheatre AB
+493 Smartstream.tv
+497 Exactag
+504 VivaKi
+518 Weborama Video
+520 Flite - Expandable
+526 MediaMath
+527 Chango
+528 Xaxis for Publishers (24/7 Real Media) Video
+535 Undertone Video
+536 Videoplaza
+540 Hubrus Video
+544 A9 Video
+545 Freakout Video
+546 Adap.TV DSP Video
+548 Adnologies Video
+550 AdYapper
+551 Nielsen OCR
+552 Valueclick Video
+556 RTB Baltic (C8) Video
+557 RunDSP Video
+566 Spark Flow
+571 Torrential Video
+582 Extreme Reach Digital Video
+604 Platform ID Video
+606 Gruvi TV
+607 RevenueMantra
+610 Liquidus Marketing Video

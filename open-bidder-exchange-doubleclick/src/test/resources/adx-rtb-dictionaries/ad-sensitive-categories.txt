@@ -1,0 +1,16 @@
+0 Ad has no sensitive categories
+3 Politics
+4 Dating
+5 Religion
+7 Video Games (Casual & Online)
+8 Ringtones & Downloadables
+10 Get Rich Quick
+18 Weight Loss
+19 Cosmetic Procedures & Body Modification
+23 Drugs & Supplements
+24 Sexual & Reproductive Health
+27 Consumer Loans
+28 Free Gifts, Quizzes, & Surveys
+29 Misleading Claims
+30 Black Magic, Astrology, & Esoteric
+31 References to Sex & Sexuality

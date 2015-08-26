@@ -1,0 +1,136 @@
+1 Creative won the auction
+2 Internal error
+3 Unknown error (deprecated)
+4 Internal error: unknown status code
+5 Creative filtered due to landing page quality
+6 Creative filtered because malware was detected
+7 Creative has not yet been reviewed
+8 Unknown error (deprecated)
+9 Unknown error (deprecated)
+10 Creative was not approved
+11 Creative has not yet been categorized
+12 Creative filtered by publisher through the Publisher Controls ad review tool
+13 Creative filtered because the context of the inventory was incompatible with ad content, according to ad policy
+14 Creative filtered because of detected excluded_sensitive_category
+15 Creative filtered because one or more declared product categories were excluded in the bid request
+16 Creative filtered because one or more detected vendors are ineligible to serve ads on the Ad Exchange
+17 Creative filtered because one or more declared vendors were excluded in the bid request
+18 Creative filtered because one or more declared attributes were excluded in the bid request
+19 Creative filtered because one or more declared sensitive categories were excluded in the bid request
+20 Creative filtered because the required template field buyer_creative_id is missing
+21 Creative filtered because the required field buyer_creative_id is missing
+22 Creative filtered because no matching ad slot was found
+23 Creative filtered because the returned adgroup_id is invalid (not one of the matched adgroups)
+24 Creative filtered because the required adgroup_id field is missing
+25 Creative filtered because the declared width and height do not match the request
+26 Creative filtered because the required fields width or height are missing
+27 Creative filtered because it includes more than one of the following: html_snippet, video_url, snippet_template
+28 Creative filtered because click_through_url was not empty, should be empty when the TemplateParameter message is used
+29 Unknown error (deprecated)
+30 Unknown error (deprecated)
+31 Unknown error (deprecated)
+32 Creative filtered because one or more template_parameter fields were filled for a non-template ad
+33 Creative filtered because the required field html_snippet was empty
+34 Creative filtered because the required field video_url was empty
+35 Creative filtered because the required field snippet_template was empty
+36 Creative filtered because the required field click_through_url was empty
+37 Creative filtered because html_snippet and/or snippet_template fields were not empty, should be empty when video is requested
+38 Creative filtered because video_url field was not empty, should be empty unless video is requested
+39 Creative filtered because template did not have at least two instances of parameter_value
+40 Creative filtered because template has too many instances of parameter_value
+41 Creative filtered because buyer_creative_id in ad message was not empty, should only appear in TemplateParameter message for template ads
+42 Creative filtered because identical buyer_creative_id appears in more than one template parameter
+43 Creative filtered because the parameter with backup_index representing a backup ad appeared before the non-backup parameter
+44 Creative filtered because backup_index does not refer to a non-backup parameter
+45 Creative filtered because the required template field 'left' is missing
+46 Creative filtered because the required template field 'right' is missing
+47 Creative filtered because the required template field 'top' is missing
+48 Creative filtered because the required template field 'bottom' is missing
+49 Creative filtered because the template field 'left' is not greater than 0
+50 Creative filtered because the template field 'right' exceeds the maximum width of the requesting ad slot
+51 Creative filtered because the template field 'top' exceeds the maximum height of the requesting ad slot
+52 Creative filtered because the template field 'bottom' is not greater than 0
+53 Creative filtered because the bounding box is too narrow for template parameters
+54 Creative filtered because the height of bounding box is too low for template parameters
+55 Creative filtered because template parameter overlaps with a preceeding template parameter
+56 Creative filtered because the field click_through_url is too short, must be at least 11 characters
+57 Creative filtered because the field click_through_url could not be parsed
+58 Creative filtered because the field click_through_url has a domain consisting of all digits
+59 Creative filtered because the field video_url is too short, must be at least 11 characters
+60 Creative filtered because the field video_url could not be parsed
+61 Creative filtered because the field video_url has a domain consisting of all digits
+62 Creative filtered because the template field click_through_url was missing
+63 Creative filtered because an expandable vendor was declared, but expandable directions are missing from Ad.attribute
+64 Creative filtered because expandable directions were passed in Ad.attribute, but an expandable vendor declaration is missing
+65 Creative filtered because the template field buyer_creative_id exceeds 64 bytes
+66 Creative filtered because the field buyer_creative_id exceeds 64 bytes
+67 Creative filtered because max_cpm_micros is not greater than or equal to min_cpm_micros
+68 Creative filtered because max_cpm_micros is not greater than 0
+69 Status of creative remains unchecked since a previous template_parameter failed
+70 Unknown error (deprecated)
+71 Creative filtered due to publisher's URL exclusion settings
+72 Creative filtered due to publisher's advertiser exclusion settings
+73 Creative filtered due to publisher's targeting type settings
+74 Creative filtered because it has historically had a high error rate and/or very low view rate
+75 Creative filtered because the hosted creative had the wrong size or was not in a matching adgroup
+76 Creative filtered because the VAST XML contains errors or could not be fetched for verification
+77 Creative is awaiting review by the publisher
+78 Creative filtered because the declared creative size was not present in pre-targeting adgroup
+79 Creative was outbid in the auction
+80 Creative filtered because the bid price was below the minimum CPM threshold
+81 Creative was not allowed in Private Auction or Preferred Deal
+82 Creative filtered because the ad language is not allowed by the publisher
+83 The ad was part of a winning passback chain and will only show if preceding requests in the chain pass back
+84 Creative filtered because the publisher disallows ads from this agency
+85 Creative requires additional review
+86 Creative filtered because one or more undeclared restricted_category fields were detected
+87 Creative filtered because one or more declared restricted_category fields do not match the request
+88 Creative filtered because deal_id is not for a valid deal
+89 Interstitial ad size declared is either too big or too small to show on the device screen (it needs to cover at least 50% of screen width and 40% height)
+90 AdX VAST ad type does not match the type required in the video ad request
+91 Creative filtered because the duration of the video is too long
+92 Creative filtered because the duration of the video is too short
+93 Creative filtered because it is a skippable video ad for a non-skippable request
+94 Creative filtered because it is a non-skippable video ad for a skippable request
+95 Creative filtered because the skip offset is wrong (5 seconds is the correct value)
+96 Creative filtered because it lacks a MP4 video file in the VAST
+97 Creative filtered because it lacks a WebM video file in the VAST
+98 Creative filtered because it lacks a Flash video file in the VAST
+99 Creative filtered because it lacks a video file format in the VAST file all ads should have a Flash, MP4, and WebM file
+100 Creative filtered because one or more of the required template fields left, right, top, or bottom is missing
+101 Creative filtered because template fields left or top are not greater than 0, or right or bottom exceed the ad slot dimensions
+102 Creative filtered because the bidder account is in testing mode
+103 Native ad specified for an adslot that does not support it
+104 native_ad.image.url field value is an invalid URL
+105 native_ad.logo.url field value is an invalid URL
+106 native_ad.app_icon.url field value is an invalid URL
+107 Required elements specified in the bit field bid_request.adslot.native_ad_template.required_fields are missing
+108 native_ad.impression_tracking_url field value is too short to be a valid URL
+109 native_ad.impression_tracking_url field value cannot be parsed as a valid URL
+110 native_ad.impression_tracking_url field value has a domain that is all digits
+111 native_ad.click_tracking_url field value is too short to be a valid URL
+112 native_ad.click_tracking_url field value cannot be parsed as a valid URL
+113 native_ad.click_tracking_url field value has a domain that is all digits
+114 Creative filtered because deal_id is invalid
+115 ADX_AD_SOURCE_TYPE_MANAGED_TAG does not support deals.
+116 Creative filtered because deal's buyer_network_id is invalid
+117 Creative filtered because deal's advertiser is invalid
+118 Creative filtered because a deal id is required
+119 Creative filtered by publisher's exclusion rules
+120 Creative filtered because the language could not be detected and the publisher has language restrictions.
+121 Creative filtered because the billing entity it is attributed to is out of budget
+122 Creative filtered due to frequency caps
+123 Creative filtered because it is not allowed to serve on the Android platform
+124 Creative filtered because it is not allowed to serve on the iOS platform
+125 impression_tracking_url field value is too short to be a valid URL
+126 impression_tracking_url field value cannot be parsed as a valid URL
+127 impression_tracking_url field value has a domain that is all digits
+128 impression_tracking_url not supported for non mobile-app html ads
+129 Creative filtered because it is ineligible or unapproved for serving to a Chinese user or property
+130 Creative filtered because it is ineligible or unapproved for serving to a Russian user or property
+131 Creative has not yet been reviewed and the account has too many active snippets
+132 native_ad.image.width or native_ad.image.height has an invalid value
+133 native_ad.logo.width or native_ad.logo.height has an invalid value
+134 native_ad.app_icon.width or native_ad.app_icon.height has an invalid value
+135 native_ad.store field value is an invalid URL
+136 native_ad.star_rating field value is invalid

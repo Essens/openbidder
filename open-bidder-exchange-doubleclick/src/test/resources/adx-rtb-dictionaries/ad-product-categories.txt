@@ -1,0 +1,262 @@
+10001 Vehicles
+10002 Family & Community
+10003 Real Estate
+10004 Business & Industrial
+10005 Beauty & Personal Care
+10006 Occasions & Gifts
+10009 Home & Garden
+10010 Food & Groceries
+10011 Health
+10012 Finance
+10013 Arts & Entertainment
+10014 Sports & Fitness
+10015 Hobbies & Leisure
+10016 Jobs & Education
+10017 Travel & Tourism
+10019 Computers & Consumer Electronics
+10020 Dining & Nightlife
+10021 Apparel
+10024 Motor Vehicles
+10026 Vehicle Parts & Accessories
+10027 Boats & Watercraft
+10030 Baby, Parenting & Family
+10031 Romance & Relationships
+10032 Rental Listings
+10039 Property Development
+10040 Real Estate Agents & Brokerages
+10042 Real Estate Listings
+10047 Skin Care
+10048 Tanning & Sun Care
+10049 Spa & Medical Spa
+10050 Anti-Aging
+10052 Baby Care & Hygiene
+10054 Make-Up & Cosmetics
+10055 Hair Care
+10057 Perfumes & Fragrances
+10058 Shaving & Grooming
+10060 Hygiene & Toiletries
+10061 Face Care
+10082 Food
+10085 Health Conditions & Concerns
+10086 Nutrition & Dieting
+10087 Medical Devices, Equipment & Supplies
+10088 Biotech & Pharmaceutical
+10089 Pharmacy
+10091 Health Care Services
+10092 Financial Planning & Management
+10093 Banking
+10094 Money Transfer & Wire Services
+10095 Investing
+10096 Business Banking & Finance
+10097 Credit & Lending
+10098 Business News & Media
+10099 Grants, Scholarships & Financial Aid
+10102 Insurance
+10103 TV & Video
+10105 Entertainment Industry
+10106 Humor & Jokes
+10108 News, Media & Publications
+10109 Music & Audio
+10111 Events, Shows & Cultural Attractions
+10112 Books & Literature
+10113 Camping & Outdoor Recreation
+10116 Sports Fan Gear & Apparel
+10117 Boating & Water Recreation
+10121 Sporting Goods
+10123 Fitness
+10127 Occult & Paranormal
+10128 Cooking
+10130 Pets
+10132 Photo & Video
+10135 Antiques & Collectibles
+10137 Gambling
+10141 Education & Training
+10142 Accommodations
+10144 Air Travel
+10145 Tourist Attractions & Destinations
+10146 Transportation & Excursions
+10147 Last Minute Travel
+10150 Specialty Travel
+10151 Travel Booking Services
+10153 Cruises & Cruise Services
+10167 Consumer Electronics
+10168 Computers
+10169 Restaurants
+10171 Jewelry
+10176 Clothing
+10177 Footwear
+10182 Motorcycles
+10185 Cars & Trucks
+10209 Car Parts & Accessories
+10235 Baby
+10236 Parenting & Family
+10273 Design & Engineering
+10282 Building Construction & Maintenance
+10294 Scientific Equipment & Services
+10295 Energy & Utility
+10296 Business Management Software
+10299 Security Equipment & Services
+10300 Office
+10301 Food Service Industry
+10302 Industrial Electronics
+10306 Plant & Facility
+10307 Commercial & Industrial Printing
+10364 Cards & Greetings
+10365 Gifts
+10369 Weddings
+10404 Home Improvement & Maintenance
+10405 Home Decor & Interior Decorating
+10406 Yard, Garden & Patio
+10410 Kitchen & Dining
+10412 Home Appliances
+10413 Home Furniture
+10432 Baked Goods & Bakery Items
+10434 Baking Ingredients
+10453 Smoking & Smoking Cessation
+10454 Warts
+10460 Vision
+10473 Skin Conditions & Skin Health
+10491 Diets & Diet Programs
+10507 Alternative, Non-Western & Complementary Care
+10508 Plastic & Cosmetic Surgery
+10509 Laboratory Testing & Medical Diagnostic Services
+10531 Real Estate Investments
+10550 Vehicle Insurance
+10557 TV Shows & Programs
+10566 TV Broadcasting
+10578 Travel Media & Publications
+10653 Golf Equipment
+10666 Fitness Classes & Instruction
+10669 Personal Training
+10671 Toys
+10672 Games
+10679 Recipes
+10683 Pet Food & Supplies
+10691 Digital Cameras
+10746 Job Listings
+10754 Standardized & Admissions Tests
+10756 Reference Materials & Resources
+10759 Vocational Training & Trade Schools
+10763 Colleges, Universities & Post-Secondary Education
+10769 Hotels, Motels & Resorts
+10770 Vacation Rentals
+10776 Luggage
+10778 Airline Tickets, Fares & Flights
+10872 Consumer Electronic Accessories
+10873 Home Audio & Video
+10876 Wireless Devices
+10877 Portable Media Devices
+10878 Telephony
+10880 GPS
+10881 Car Audio & Video
+10883 Computer Hardware
+10885 Software
+10886 Computer Accessories
+10889 Cuisines
+10913 Underwear
+11020 Baby Diapering & Toilet Training
+11028 Maternity & New Parent
+11093 Accounting & Auditing
+11099 Office & Facilities Management
+11141 Commercial & General Contracting
+11270 Project Management Software
+11284 HVAC
+11287 Hardware Tools & Accessories
+11339 Office Appliances
+11368 Graphics & Multimedia Software
+11491 Internet Service Plans
+11493 Web Design & Development
+11496 Social Networks & Online Communities
+11504 Web Hosting
+11511 Mobile Phone Plans
+11669 Weight Loss Products
+11710 Acne
+11772 Vitamins & Supplements
+11783 Cosmetic Surgery & Medical Spa Services
+11813 Private Banking
+11814 Online Banking
+11816 Debit & Check Cards
+11818 Fixed Deposit Accounts & Certificates
+11819 Brokerages & Day Trading
+11820 Investor Relations & Venture Capital
+11824 Retirement Investments
+11825 Spread Betting
+11827 Securities
+11828 Mutual Funds
+11840 Unsecured Credit & Lending
+11841 Loans
+11842 Credit Cards
+11870 Dining & Nightlife Reviews, Guides & Listings
+11883 Sports Event Tickets & Ticketing Services
+11942 Online Games & Puzzles
+11950 Video Games, Consoles & Accessories
+11980 Pet Breeding
+12066 Resorts
+12067 Hotels
+12143 Televisions
+12161 Mobile Phones
+12184 Computer Networking Devices
+12187 Laptop Computers
+12204 Internet Software & Web Goodies
+12209 Business & Productivity Software
+12240 Shirts, Tops & Blouses
+12494 Medical Diagnostic Equipment & Monitoring Devices
+12590 Power Tools
+12864 Weight Loss Drugs & Medications
+12865 Weight Loss Supplements
+12950 401(K)s
+12952 IRAs
+12956 Commercial Lending
+12957 Auto Financing
+12960 Home Loans & Mortgages
+12961 Personal Lending & Borrowing
+12997 Massive Multiplayer Online Games
+13092 Network Security Software
+13094 Email & Messaging
+13116 Jerseys & Knit Shirts
+13283 Commercial Mortgages
+13284 Auto Leasing
+13286 Title Loans
+13289 Interest Only Mortgages
+13291 Government Mortgages
+13292 Buy-To-Let Mortgages
+13293 Fixed Rate Mortgages
+13296 Home Equity Loans & Lines of Credit
+13299 Home Refinancing Loans
+13300 Payday & Emergency Loans
+13301 Personal Loans & Lines of Credit
+13314 Anti-Virus Software
+13377 Computer & Video Games
+13381 Mobile Phones & Accessories
+13388 Visual Art & Design
+13417 Movies & Films
+13418 Internet
+13419 Phone Plans
+13422 Body Art
+13423 Guns & Firearms
+13425 Fun & Trivia
+13432 Translation
+13459 Stocks
+13464 Industrial Goods & Manufacturing
+13469 Astrology & Horoscopes
+13470 Psychics & Fortune Telling
+13491 Chemical Industry
+13493 Occasions
+13530 Arts & Entertainment Awards
+13536 Film & TV Industry
+13566 Offbeat
+13567 Edgy & Bizarre
+13596 Photographic & Digital Arts
+13605 Sports
+13610 Baseball
+13655 Vehicle Dealers
+13656 Car Dealers
+13657 Boat & Yacht Sales & Brokers
+13658 Gardening
+13686 Attorneys & Law Firms
+13714 Used Cars & Trucks
+13725 Web Portals
+13760 Cartoons
+13768 Domain Names & Domain Name Registration
+13780 Children's Clothing
+13797 Building Materials & Supplies

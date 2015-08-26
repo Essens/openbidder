@@ -1,0 +1,234 @@
+#!/usr/bin/env bash
+
+### BEGIN INIT INFO
+# Provides: open-bidder
+# Required-Start: $local_fs $network $remote_fs
+# Required-Stop: $local_fs $remote_fs
+# Default-Start: 2 3 4 5
+# Default-Stop: 0 1 6
+# Description: Open Bidder
+### END INIT INFO
+
+usage() {
+  echo "Usage: ${0##*/} [-d] {start|stop|restart|run|demo|check|status|supervise} [ CONFIGS ... ]"
+  exit 1
+}
+
+[ $# -gt 0 ] || usage
+
+##################################################
+# Some utility functions
+##################################################
+
+running() {
+  local PID=$(cat "$1" 2>/dev/null) || return 1
+  kill -0 "$PID" 2>/dev/null
+}
+
+check_existing_process() {
+  if [ -f "$OB_PID" ]; then
+    if running $OB_PID; then
+      echo "Already Running! Pid file: $OB_PID, pid: $(< "$OB_PID")"
+      exit 1
+    else
+      echo "Removing dead pid file: $OB_PID"
+      rm -f "$OB_PID"
+    fi
+  fi
+}
+
+##################################################
+# Get the action & configs
+##################################################
+
+DEBUG=0
+TMPDIR=${TMPDIR:-/tmp}
+NOSTART=0
+OB_HOME=/usr/local/open-bidder
+
+while [[ $1 = -* ]]; do
+  case $1 in
+    -d) DEBUG=1 ;;
+  esac
+  shift
+done
+ACTION=$1
+shift
+
+if [ -f /etc/default/open-bidder ] ; then
+  source /etc/default/open-bidder
+fi
+
+#####################################################
+# Configure pid and state files
+#####################################################
+
+if [ -z "$OB_RUN" ]; then
+  OB_RUN=/var/run
+fi
+
+if [ -z "$OB_PID" ]; then
+  OB_PID="$OB_RUN/open-bidder.pid"
+fi
+
+if [ -z "$OB_STATE" ]; then
+  OB_STATE=$OB_HOME/open-bidder.state
+fi
+
+JAVA_OPTS+=("-Djetty.state=$OB_STATE")
+rm -f $OB_STATE
+
+#####################################################
+# Add properties to Java VM options.
+#####################################################
+
+JAVA_OPTS+=("-Djetty.home=$OB_HOME" "-Djava.io.tmpdir=$TMPDIR" "-Dlogback.configurationFile=$OB_HOME/etc/logback.xml")
+echo "JAVA_OPTS=\"${JAVA_OPTS[@]}\"" > /var/run/bidder-init
+
+#####################################################
+# This is how the Open Bidder server will be started
+#####################################################
+
+RUN_LAUNCHER=$OB_HOME/bin/bidder
+RUN_CMD=($RUN_LAUNCHER ${MAIN_OPTS[@]})
+
+#####################################################
+# Debug launching options.
+#####################################################
+
+if (( DEBUG )); then
+  echo "OB_HOME    =  $OB_HOME"
+  echo "OB_PID     =  $OB_PID"
+  echo "JAVA_OPTS  =  ${JAVA_OPTS[*]}"
+  echo "MAIN_OPTS  =  ${MAIN_OPTS[*]}"
+  echo "RUN_CMD    =  ${RUN_CMD}"
+fi
+
+##################################################
+# Do the action
+##################################################
+
+case "$ACTION" in
+  start)
+    echo -n "Starting Open Bidder service..."
+
+    if (( NO_START )); then 
+      echo "Not starting open-bidder - NO_START=1";
+      exit
+    fi
+
+    if [ $UID -eq 0 ] && type start-stop-daemon > /dev/null 2>&1; then
+      unset CH_USER
+      if [ -n "$OB_USER" ]; then
+        CH_USER="-c$OB_USER"
+      fi
+
+      start-stop-daemon -S -p"$OB_PID" $CH_USER -d"$OB_HOME" -b -m -a $RUN_LAUNCHER -- ${MAIN_OPTS[@]}
+
+    else
+      check_existing_process
+
+      if [ "$OB_USER" ]; then
+        touch "$OB_PID"
+        chown "$OB_USER" "$OB_PID"
+        su - "$OB_USER" -c "
+          exec ${RUN_CMD[*]} --daemon &
+          disown \$!
+          echo \$! > '$OB_PID'"
+      else
+        "${RUN_CMD[@]}" &
+        disown $!
+        echo $! > "$OB_PID"
+      fi
+
+    fi
+
+    echo "OK `date`"
+
+    ;;
+
+  stop)
+    echo -n "Stopping Open Bidder service..."
+
+    if [ $UID -eq 0 ] && type start-stop-daemon > /dev/null 2>&1; then
+      start-stop-daemon -K -p"$OB_PID" -d"$OB_HOME" -a $OB_RUN -s HUP
+      TIMEOUT=30
+
+      while running "$OB_PID"; do
+        if (( TIMEOUT-- == 0 )); then
+          start-stop-daemon -K -p"$OB_PID" -d"$OB_HOME" -a $OB_RUN -s KILL
+        fi
+        sleep 1
+      done
+
+      rm -f "$OB_PID"
+    else
+      PID=$(cat "$OB_PID" 2>/dev/null)
+      kill "$PID" 2>/dev/null
+
+      TIMEOUT=30
+      while running $OB_PID; do
+        if (( TIMEOUT-- == 0 )); then
+          kill -KILL "$PID" 2>/dev/null
+        fi
+        sleep 1
+      done
+
+      rm -f "$OB_PID"
+    fi
+
+    echo "OK `date`"
+
+    ;;
+
+  restart)
+    OB_SH=$0
+    "$OB_SH" stop "$@"
+    "$OB_SH" start "$@"
+
+    ;;
+
+  supervise)
+    #
+    # Under control of daemontools supervise monitor which
+    # handles restarts and shutdowns via the svc program.
+    #
+    exec "${RUN_CMD[@]}"
+
+    ;;
+
+  run|demo)
+    echo "Running Open Bidder on terminal..."
+
+    check_existing_process
+
+    exec "${RUN_CMD[@]}"
+    ;;
+
+  check|status)
+    echo "Checking arguments to Open Bidder: "
+    echo "OB_HOME    =  $OB_HOME"
+    echo "OB_PID     =  $OB_PID"
+	  echo "JAVA_OPTS  =  ${JAVA_OPTS[*]}"
+	  echo "MAIN_OPTS  =  ${MAIN_OPTS[*]}"
+	  echo "RUN_CMD    =  ${RUN_CMD}"
+    echo
+
+    if [ -f "$OB_PID" ]
+    then
+      echo "Open Bidder running, pid: $(< "$OB_PID")"
+      exit 0
+    else
+      echo "Open Bidder not running"
+      exit 1
+    fi
+
+    ;;
+
+  *)
+    usage
+
+    ;;
+esac
+
+exit 0

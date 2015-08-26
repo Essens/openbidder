@@ -1,0 +1,10 @@
+<page-header title="Create New Project"></page-header>
+
+<p ng-show="showStartMessage">You must first create a project in order to use Open Bidder.</p>
+
+<form class="form-horizontal" ng-submit="errors = null; createProject()">
+  <ng-include src="'/app/views/project.html'"></ng-include>
+  <div class="form-actions">
+    <button type="submit" class="btn btn-primary">Create Project</button>
+  </div>
+</form>
