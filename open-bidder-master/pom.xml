@@ -1,0 +1,348 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<modelVersion>4.0.0</modelVersion>
+
+  <groupId>com.google.openbidder</groupId>
+  <artifactId>openbidder</artifactId>
+  <packaging>pom</packaging>
+  <version>0.7.2</version>
+  <name>Google Open Bidder</name>
+  <description>
+    Open Bidder is a real-time bidding (RTB) framework
+  </description>
+  <url>https://developers.google.com/ad-exchange/rtb/open-bidder/</url>
+  <organization>
+    <name>Google, Inc.</name>
+    <url>http://www.google.com</url>
+  </organization>
+
+  <issueManagement>
+    <system>GoogleCode</system>
+    <url>https://code.google.com/p/google-open-bidder/issues/</url>
+  </issueManagement>
+
+  <modules>
+    <module>open-bidder-api</module>
+    <module>open-bidder-bench</module>
+    <module>open-bidder-bid</module>
+    <module>open-bidder-bigquery</module>
+    <module>open-bidder-binary</module>
+    <module>open-bidder-click</module>
+    <module>open-bidder-client</module>
+    <module>open-bidder-cloudstorage</module>
+    <module>open-bidder-config</module>
+    <module>open-bidder-deals</module>
+    <module>open-bidder-echo-client</module>
+    <module>open-bidder-echo-server</module>
+    <module>open-bidder-exchange-doubleclick</module>
+    <module>open-bidder-flags</module>
+    <module>open-bidder-gce</module>
+    <module>open-bidder-googleapi</module>
+    <module>open-bidder-http</module>
+    <module>open-bidder-impression</module>
+    <module>open-bidder-jetty</module>
+    <module>open-bidder-match</module>
+    <module>open-bidder-metrics</module>
+    <module>open-bidder-netty-client</module>
+    <module>open-bidder-netty-common</module>
+    <module>open-bidder-netty-server</module>
+    <module>open-bidder-oauth</module>
+    <module>open-bidder-puppet</module>
+    <module>open-bidder-requester</module>
+    <module>open-bidder-remarketing</module>
+    <module>open-bidder-samples</module>
+    <module>open-bidder-samples-binary</module>
+    <module>open-bidder-server</module>
+    <module>open-bidder-servlet</module>
+    <module>open-bidder-storage</module>
+    <module>open-bidder-system</module>
+    <module>open-bidder-template</module>
+    <module>open-bidder-template-mustache</module>
+    <module>open-bidder-ui</module>
+    <module>open-bidder-util</module>
+    <module>open-bidder-weather</module>
+    <module>mobitrans-bidder</module>
+    <module>mobitrans-bidder-server</module>
+  </modules>
+
+  <prerequisites>
+    <maven>3.2</maven>
+  </prerequisites>
+
+  <properties>
+    <bigQueryVersion>v2-rev174-1.19.0</bigQueryVersion>
+    <caliperVersion>1.0-beta-1</caliperVersion>
+    <findBugsJsr305Version>3.0.0</findBugsJsr305Version>
+    <googleApiClientVersion>1.19.0</googleApiClientVersion>
+    <guavaVersion>18.0</guavaVersion>
+    <guiceVersion>3.0</guiceVersion>
+    <hamcrestVersion>1.3</hamcrestVersion>
+    <httpCoreVersion>4.3.2</httpCoreVersion>
+    <httpClientVersion>4.3.5</httpClientVersion>
+    <codehausJacksonVersion>1.9.13</codehausJacksonVersion>
+    <fasterxmlJacksonVersion>2.4.3</fasterxmlJacksonVersion>
+    <fasterxmlJacksonDatabindVersion>2.4.3</fasterxmlJacksonDatabindVersion>
+    <javassistVersion>3.18.2-GA</javassistVersion>
+    <jcommanderVersion>1.35</jcommanderVersion>
+    <jettyVersion>9.2.3.v20140905</jettyVersion>
+    <jodaTimeVersion>2.5</jodaTimeVersion>
+    <junitVersion>4.11</junitVersion>
+    <logbackVersion>1.1.2</logbackVersion>
+    <metricsVersion>3.0.2</metricsVersion>
+    <mockitoVersion>1.10.8</mockitoVersion>
+    <mustacheVersion>0.8.17</mustacheVersion>
+    <nettyVersion>4.0.24.Final</nettyVersion>
+    <openrtbVersion>0.7.2</openrtbVersion>
+    <!-- Use .../master for snapshot, .../${openrtbVersion} for release. -->
+    <openrtbSource>https://raw.githubusercontent.com/google/openrtb/0.7.2</openrtbSource>
+    <openrtbDoubleclickVersion>0.7.2</openrtbDoubleclickVersion>
+    <protobufVersion>2.6.1</protobufVersion>
+    <servletVersion>3.1.0</servletVersion>
+    <slf4jVersion>1.7.7</slf4jVersion>
+
+    <!-- Protobuf properties -->
+    <generatedSources>${project.basedir}/target/generated-sources</generatedSources>
+    <protobufSource>${project.basedir}/src/main/protobuf</protobufSource>
+    <protobufGenerated>${generatedSources}/protobuf</protobufGenerated>
+
+    <!-- Other properties -->
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+    <cobertura.maxmem>2G</cobertura.maxmem>
+  </properties>
+
+  <reporting>
+    <plugins>
+      <plugin>
+        <groupId>org.codehaus.mojo</groupId>
+        <artifactId>cobertura-maven-plugin</artifactId>
+        <version>2.6</version>
+        <configuration>
+          <aggregate>true</aggregate>
+          <format>xml</format>
+        </configuration>
+      </plugin>
+    </plugins>
+  </reporting>
+
+  <scm>
+    <developerConnection>scm:git:</developerConnection>
+    <tag>openbidder-0.7.2</tag>
+  </scm>
+
+  <dependencies>
+    <dependency>
+      <groupId>junit</groupId>
+      <artifactId>junit</artifactId>
+      <version>${junitVersion}</version>
+      <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.mockito</groupId>
+      <artifactId>mockito-core</artifactId>
+      <version>${mockitoVersion}</version>
+      <scope>test</scope>
+    </dependency>
+  </dependencies>
+
+  <build>
+    <plugins>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-antrun-plugin</artifactId>
+        <version>1.7</version>
+      </plugin>
+
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-jar-plugin</artifactId>
+        <version>2.5</version>
+      </plugin>
+
+      <plugin>
+        <groupId>org.codehaus.mojo</groupId>
+        <artifactId>build-helper-maven-plugin</artifactId>
+        <version>1.9.1</version>
+      </plugin>
+
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-site-plugin</artifactId>
+        <version>3.4</version>
+      </plugin>
+
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-dependency-plugin</artifactId>
+        <version>2.9</version>
+      </plugin>
+
+      <plugin>
+        <groupId>com.googlecode.maven-download-plugin</groupId>
+        <artifactId>download-maven-plugin</artifactId>
+        <version>1.2.0</version>
+      </plugin>
+
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-war-plugin</artifactId>
+        <version>2.5</version>
+      </plugin>
+
+      <plugin>
+        <groupId>pl.project13.maven</groupId>
+        <artifactId>git-commit-id-plugin</artifactId>
+        <version>2.1.11</version>
+      </plugin>
+
+      <plugin>
+        <groupId>org.codehaus.mojo</groupId>
+        <artifactId>appassembler-maven-plugin</artifactId>
+        <version>1.8.1</version>
+      </plugin>
+
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-assembly-plugin</artifactId>
+        <version>2.4.1</version>
+      </plugin>
+
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-surefire-plugin</artifactId>
+        <version>2.17</version>
+        <configuration>
+          <redirectTestOutputToFile>true</redirectTestOutputToFile>
+          <argLine>-Dlogback.configurationFile=src/test/resources/logback.xml</argLine>
+        </configuration>
+      </plugin>
+
+      <plugin>
+        <groupId>org.codehaus.mojo</groupId>
+        <artifactId>cobertura-maven-plugin</artifactId>
+        <version>2.6</version>
+        <configuration>
+          <format>xml</format>
+          <format>html</format>
+        </configuration>
+      </plugin>
+
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-javadoc-plugin</artifactId>
+        <version>2.10.1</version>
+        <configuration>
+          <windowtitle>${project.name}</windowtitle>
+          <notimestamp>true</notimestamp>
+          <excludePackageNames>*.impl:*.config:com.google.openbidder.storage*:com.google.openbidder.sample*:com.google.openbidder.weather*:com.google.openbidder.binary*:com.google.openbidder.flags:com.google.openbidder.http.metadata:com.google.openbidder.http.receiver:com.google.openbidder.metrics:com.google.openbidder.http.template.mustache:com.google.openbidder.ui.*:com.google.openbidder.server.guice:com.google.openbidder.util:com.google.openbidder.client:com.google.openbidder.echo*:com.google.openbidder.requester:com.google.openbidder.system:com.google.openbidder.exchange.doubleclick.server:com.google.openbidder.jetty:com.google.openbidder.netty*:com.google.openbidder.servlet:com.google.openbidder.bench*</excludePackageNames>
+          <groups>
+            <group>
+              <title>API</title>
+              <packages>com.google.openbidder.api.bidding:com.google.openbidder.api.click:com.google.openbidder.api.impression:com.google.openbidder.api.interceptor:com.google.openbidder.api.match:com.google.openbidder.api.oauth:com.google.openbidder.api.openrtb:com.google.openbidder.api.platform:com.google.openbidder.api.snippet:com.google.openbidder.api.util</packages>
+            </group>
+            <group>
+              <title>HTTP</title>
+              <packages>com.google.openbidder.http:com.google.openbidder.http.cookie:com.google.openbidder.http.message:com.google.openbidder.http.request:com.google.openbidder.http.response:com.google.openbidder.http.route:com.google.openbidder.http.template:com.google.openbidder.http.util:com.google.openbidder.template</packages>
+            </group>
+            <group>
+              <title>Google Compute Engine</title>
+              <packages>com.google.openbidder.googleapi:com.google.openbidder.bigquery:com.google.openbidder.cloudstorage:com.google.openbidder.cloudstorage.model:com.google.openbidder.googlecompute:com.google.openbidder.oauth.googlecompute</packages>
+            </group>
+            <group>
+              <title>DoubleClick Ad Exchange / Connector</title>
+              <packages>com.google.openbidder.exchange.doubleclick:com.google.openbidder.exchange.doubleclick.impression:com.google.openbidder.exchange.doubleclick.interceptor:com.google.openbidder.exchange.doubleclick.match</packages>
+            </group>
+            <group>
+              <title>DoubleClick Ad Exchange / Extensions</title>
+              <packages>com.google.openbidder.api.model*:com.google.openbidder.deals:com.google.openbidder.deals.model:com.google.openbidder.oauth:com.google.openbidder.oauth.generic:com.google.openbidder.remarketing.interceptor:com.google.openbidder.remarketing.model:com.google.openbidder.remarketing.services</packages>
+            </group>
+            <group>
+              <title>Server Modules (Connector SPI)</title>
+              <packages>com.google.openbidder.bidding:com.google.openbidder.bidding.interceptor:com.google.openbidder.click:com.google.openbidder.click.interceptor:com.google.openbidder.impression:com.google.openbidder.impression.interceptor:com.google.openbidder.match:com.google.openbidder.match.interceptor:com.google.openbidder.server:com.google.openbidder.snippet:com.google.openbidder.system</packages>
+            </group>
+          </groups>
+        </configuration>
+      </plugin>
+
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-release-plugin</artifactId>
+        <version>2.5.1</version>
+        <configuration>
+          <autoVersionSubmodules>true</autoVersionSubmodules>
+          <preparationGoals>clean verify javadoc:aggregate</preparationGoals>
+        </configuration>
+      </plugin>
+    </plugins>
+  </build>
+
+  <profiles>
+    <profile>
+      <id>default</id>
+      <activation>
+        <activeByDefault>true</activeByDefault>
+      </activation>
+      <build>
+        <plugins>
+          <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-compiler-plugin</artifactId>
+            <version>3.2</version>
+            <configuration>
+              <source>1.7</source>
+              <target>1.7</target>
+            </configuration>
+          </plugin>
+        </plugins>
+      </build>
+    </profile>
+    <profile>
+      <id>full</id>
+      <activation>
+        <property>
+          <name>!m2e.version</name>
+        </property>
+      </activation>
+      <build>
+        <plugins>
+          <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-compiler-plugin</artifactId>
+            <version>3.2</version>
+            <configuration>
+              <source>1.7</source>
+              <target>1.7</target>
+            </configuration>
+            <executions>
+              <execution>
+                <id>default-compile</id>
+                <configuration>
+                  <compilerId>javac-with-errorprone</compilerId>
+                  <forceJavacCompilerUse>true</forceJavacCompilerUse>
+                </configuration>
+              </execution>
+            </executions>
+            <dependencies>
+              <dependency>
+                <groupId>com.google.errorprone</groupId>
+                <artifactId>error_prone_core</artifactId>
+                <version>1.1.2</version>
+              </dependency>
+              <dependency>
+                <groupId>org.codehaus.plexus</groupId>
+                <artifactId>plexus-compiler-javac</artifactId>
+                <version>2.3</version>
+              </dependency>
+              <dependency>
+                <groupId>org.codehaus.plexus</groupId>
+                <artifactId>plexus-compiler-javac-errorprone</artifactId>
+                <version>2.3</version>
+              </dependency>
+            </dependencies>
+          </plugin>
+        </plugins>
+      </build>
+    </profile>
+  </profiles>
+
+</project>

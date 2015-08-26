@@ -1,0 +1,31 @@
+<text-input label="Project Name" ng-model="project.description" errors="errors">
+  <help-block>Name of the Open Bidder project.</help-block>
+</text-input>
+<text-input label="Project ID" ng-model="project.apiProjectId"
+    errors="errors" read-only="!isNewProject">
+  <help-block>Find on the
+    <a href="https://console.developers.google.com/project/{{ project.apiProjectId}}" target="_blank">
+    Google Developers Console</a>.
+  </help-block>
+</text-input>
+<text-input label="Project Number" ng-model="project.apiProjectNumber"
+    errors="errors" read-only="!isNewProject">
+  <help-block>Find on the
+    <a href="https://console.developers.google.com/project/{{ project.apiProjectId}}" target="_blank">
+    Google Developers Console</a>.
+  </help-block>
+</text-input>
+<text-input label="Client ID" ng-model="project.oauth2ClientId" errors="errors">
+  <help-block>OAuth 2.0 client ID for web applications registered for Open Bidder.
+    Find or create on the
+    <a href="https://console.developers.google.com/project/{{ project.apiProjectId}}/apiui/credential" target="_blank">
+    Google Developers Console</a>.
+  </help-block>
+</text-input>
+<text-input label="Client Secret" ng-model="project.oauth2ClientSecret" errors="errors">
+  <help-block>OAuth 2.0 client secret for web applications registered for Open Bidder.
+    Find or create on the
+    <a href="https://console.developers.google.com/project/{{ project.apiProjectId}}/apiui/credential" target="_blank">
+    Google Developers Console</a>.
+  </help-block>
+</text-input>

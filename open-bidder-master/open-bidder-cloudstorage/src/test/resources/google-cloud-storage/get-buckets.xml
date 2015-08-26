@@ -1,0 +1,9 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<ListAllMyBucketsResult xmlns='http://doc.s3.amazonaws.com/2006-03-01'>
+<Buckets>
+  <Bucket>
+    <CreationDate>2012-02-10T18:11:07.655Z</CreationDate>
+    <Name>test-bucket</Name>
+  </Bucket>
+</Buckets>
+</ListAllMyBucketsResult>

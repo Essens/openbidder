@@ -1,0 +1,46 @@
+// Copyright 2011 Google Inc. All Rights Reserved.
+//
+// Protobuf messages for the Weather Interceptor sample.
+//
+syntax = "proto2";
+package com.google.openbidder.weather.model;
+
+/**
+ * A set of weather information that's relevant to our targeting.
+ */
+message WeatherConditions {
+  required int32 tempFahrenheit = 1;
+  required int32 windMph = 2;
+  required double humidityPercent = 3;
+}
+
+/**
+ * Constrains bids to some range of weather conditions.
+ */
+message WeatherTarget {
+  optional int32 minTemp = 1;
+  optional int32 maxTemp = 2;
+  optional int32 minWind = 3;
+  optional int32 maxWind = 4;
+  optional double minHumidity = 5;
+  optional double maxHumidity = 6;
+}
+
+/**
+ * A weather targeting rule: if some weather condition is satisfied, we bid a given multiplier
+ * of the request's maxCpm.  A multiplier equal to 1.0 can be used for ideal weather condition,
+ * while lower values may be good for weather that's acceptable but not perfect (so we only
+ * serve the ad if the auction is weak so we can grab it on the cheap).
+ */
+message WeatherBiddingRule {
+  required WeatherTarget target = 1;
+  required double multiplier = 2;
+}
+
+/**
+ * Binds a campaign entity to a set of WeatherBiddingRules.
+ */
+message WeatherRules {
+  required string ownerId = 1;
+  repeated WeatherBiddingRule rules = 2;
+}

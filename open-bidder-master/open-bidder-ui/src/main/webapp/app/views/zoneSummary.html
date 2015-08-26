@@ -1,0 +1,87 @@
+<page-header title="Bidder Management"></page-header>
+
+<p ng-show="projectNotFound">Project not found.</p>
+
+<div ng-show="project && !project.network">
+
+  <div ng-show="project.authorized">
+
+    <p ng-show="project.networkConfigInProgress">
+      The network and firewalls for this project are currently being configured and should
+      complete in a moment.
+    </p>
+
+    <div ng-hide="project.networkConfigInProgress">
+
+      <p ng-show="project.apiProjectAuthorized">
+        You must <a ng-href="#/project/{{ project.resourceName | encodeUri }}/network">configure
+        a network</a> before you can start instances.
+      </p>
+
+      <p ng-hide="project.apiProjectAuthorized">
+        Your Google API Project ID is incorrect or you do not have access to it. Verify the
+        <a ng-href="#/project/{{ project.resourceName | encodeUri }}">project details</a> or check the
+        <a href="https://console.developers.google.com/project/{{ project.apiProjectId}}" target="_blank">
+        Google Developers Console</a>.
+      </p>
+
+    </div>
+
+  </div>
+
+  <p ng-hide="project.authorized">
+    You must <a ng-click="project.authorize()">authorize</a>
+    Open Bidder to access Google Compute Engine on your behalf.
+  </p>
+
+</div>
+
+<div class="row" ng-show="project.network">
+
+  <div class="span6">
+    <h3>Zones</h3>
+    <p>Click a zone name to see details about its instances.</p>
+    <table class="table table-striped table-bordered">
+      <thead>
+      <tr>
+        <th class="span2">Zones</th>
+        <th class="center span1">Balancers</th>
+        <th class="center span1">Bidders</th>
+        <th class="center span1">Unknown</th>
+        <th class="center span1">Total</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr ng-repeat="zone in zones">
+        <td>
+          <a ng-href="#/project/{{ routeParams.projectId | encodeUri }}/zone/{{ zone.resourceName | encodeUri }}">
+            {{ zone.description }}
+          </a>
+          <ban-icon ng-show="isDown(zone)"></ban-icon>
+          <span ng-show="hasDowntimeSoonOrInMaintenance(zone)">
+            <downtime-warning zone="zone"></downtime-warning>
+          </span>
+          <registered-icon ng-show="zone.isRegistered"></registered-icon>
+        </td>
+        <td class="center">{{ zone.instanceSummary.balancer }}</td>
+        <td class="center">{{ zone.instanceSummary.bidder }}</td>
+        <td class="center">{{ zone.instanceSummary.unknown }}</td>
+        <td class="center">{{ zone.instanceCount }}</td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="span6">
+    <h3>Global Quotas</h3>
+    <p><span class="label label-warning">Note</span> This is across all projects on this Google API Project ID.</p>
+    <progress-bar ng-repeat="quota in quotas" quota="quota"></progress-bar>
+
+    <h3>Regional Quotas</h3>
+    <div ng-repeat="region in regions">
+      <h4>{{ region.description }}</h4>
+      <progress-bar ng-repeat="regionalQuota in region.regionalQuotaResources" quota="regionalQuota"></progress-bar>
+    </div>
+  </div>
+
+</div>

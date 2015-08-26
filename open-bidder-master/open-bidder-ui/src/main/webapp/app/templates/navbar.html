@@ -1,0 +1,79 @@
+<div class="navbar navbar-fixed-top">
+  <div class="navbar-inner">
+    <div class="container">
+      <a class="brand" href="/">Open Bidder</a>
+      <div>
+        <ul class="nav" ng-show="activeProject">
+          <li ng-class="{active: activeTab == 'network'}">
+            <a ng-href="#/project/{{ activeProjectId | encodeUri }}/network">Network</a>
+          </li>
+          <li ng-class="{active: activeTab == 'zone' || activeTab == 'instance'}">
+            <a ng-href="#/project/{{ activeProjectId | encodeUri }}/zone">Bidding</a>
+          </li>
+          <li ng-class="{active: activeTab == 'report'}">
+            <a ng-href="#/project/{{ activeProjectId | encodeUri }}/report">Reports</a>
+          </li>
+          <li id="adds-on-features" class="dropdown">
+            <a data-target="#" class="dropdown-toggle" data-toggle="dropdown">
+              <span>More</span>
+              <b class="caret"></b>
+            </a>
+            <ul class="dropdown-menu">
+              <li>
+                <a ng-href="#/project/{{ activeProjectId | encodeUri }}/preferredDeals">Preferred Deals</a>
+              </li>
+              <li>
+                <a ng-href="#/project/{{ activeProjectId | encodeUri }}/remarketing">Remarketing</a>
+              </li>
+            </ul>
+          </li>
+        </ul>
+      </div>
+      <div>
+        <ul class="nav pull-right">
+          <li><p class="navbar-text">{{ UserEmail }}</p></li>
+          <li id="default-project-name" class="dropdown">
+            <a data-target="#" class="dropdown-toggle" data-toggle="dropdown">
+              <span ng-hide="projectsLoaded">Loading projects...</span>
+              <span ng-show="projectsLoaded">
+                <span ng-hide="activeProject || inactiveProjects">No projects</span>
+                <span class="dropdown-selected-text" ng-show="activeProject">{{ activeProject.description }}</span>
+                <span class="dropdown-selected-text" ng-show="!activeProject && inactiveProjects">Select a Project</span>
+                <b class="caret"></b>
+              </span>
+            </a>
+            <ul class="dropdown-menu">
+              <li ng-show="activeProject">
+                <a ng-href="#/project/{{ activeProjectId | encodeUri }}">Edit Project</a>
+              </li>
+              <li ng-show="!activeProject.authorized && activeProject.canAuthorize()">
+                <a ng-click="activeProject.authorize()">Authorize Project</a>
+              </li>
+              <li ng-show="activeProject.authorized">
+                <a ng-click="revokeTokens()">Revoke Authorization</a>
+              </li>
+              <li ng-show="activeProject.isOwner()">
+                <a ng-href="#/project/{{ activeProjectId | encodeUri }}/user">Manage Users</a>
+              </li>
+              <li ng-show="activeProject.isOwner()">
+                <a ng-href="#/project/{{ activeProjectId | encodeUri }}/delete">Delete Project</a>
+              </li>
+              <li ng-show="activeProject" class="divider"></li>
+              <li><a ng-href="#/project">Create New Project</a></li>
+              <li ng-show="inactiveProjects" class="divider"></li>
+              <li ng-repeat="project in inactiveProjects">
+                <a ng-href="#/project/{{ project.resourceName | encodeUri }}/{{ activeTab | encodeUri }}"
+                    data-project="{{ project.resourceName }}"
+                    ng-click="project.setAsDefault()">
+                  {{ project.description }}
+                </a>
+              </li>
+              <li class="divider"></li>
+              <li><a ng-href="/_ah/logout?continue={{ path | encodeUri }}">Logout</a></li>
+            </ul>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>

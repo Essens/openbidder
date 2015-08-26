@@ -1,0 +1,33 @@
+<page-header title="Real-Time Bidding Reports"></page-header>
+
+<p ng-show="projectNotFound">Project not found.</p>
+
+<p ng-show="project && !project.authorized">
+You must <a ng-click="project.authorize()">authorize</a>
+    Open Bidder to access Google Compute Engine on your behalf.
+</p>
+
+<div ng-show="project.authorized">
+  <form class="form-horizontal" ng-submit="errors = null; updateDoubleClickReportingBucket()">
+    <p>The DoubleClick Ad Exchange provides real-time bidding reports for insight into bidder performance and status.
+    See the <a href="https://developers.google.com/ad-exchange/rtb/report-guide" target="_blank">
+    DoubleClick documentation</a> for more information about these reports and how to enable them for your account.</p>
+    <text-input label="Cloud Storage Bucket" ng-model="project.doubleClickProjectResource.doubleClickReportingBucket" errors="errors">
+      <help-block>The Cloud Storage bucket where the hourly reports are stored.
+      Contact your technical account manager to set this up and get the bucket name.</help-block>
+    </text-input>
+    <div class="form-actions">
+      <button type="submit" class="btn btn-primary">Submit</button>
+    </div>
+  </form>
+
+  <div ng-show="isBucketSet">
+    <form class="form-inline" ng-submit="errors = null; getRtbReport()">
+      <label>Select Report Date</label>
+      <input datepicker ng-model="reportDate" />
+      <button type="submit" class="btn">View Reports</button>
+    </form>
+    <p><span class="label label-warning">Note</span> Reports are only generated once per hour.</p>
+    <ng-include ng-show="showReportTable" src="'/app/views/reportIndex.html'"></ng-include>
+  </div>
+</div>

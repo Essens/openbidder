@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<appengine-web-app xmlns="http://appengine.google.com/ns/1.0"
+>
+  <application></application>
+  <version>1</version>
+
+  <inbound-services>
+    <service>channel_presence</service>
+  </inbound-services>
+
+  <static-files>
+    <include path="/app/**" />
+    <include path="/css/**" />
+    <include path="/img/**" />
+    <include path="/js/**" />
+  </static-files>
+
+  <system-properties>
+    <property name="java.util.logging.config.file" value="WEB-INF/logging.properties" />
+  </system-properties>
+
+  <threadsafe>true</threadsafe>
+  <sessions-enabled>true</sessions-enabled>
+</appengine-web-app>

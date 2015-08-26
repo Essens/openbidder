@@ -1,0 +1,27 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<ListBucketResult xmlns='http://doc.s3.amazonaws.com/2006-03-01'>
+<Name>test-bucket</Name>
+<Prefix>test-prefix</Prefix>
+<Marker>test-marker</Marker>
+<IsTruncated>false</IsTruncated>
+<Contents>
+  <Key>test-host-1</Key>
+  <LastModified>2012-02-10T18:11:07.655Z</LastModified>
+  <ETag>"c5d73852906676140148968577820769"</ETag>
+  <Size>38</Size>
+  <StorageClass>STANDARD</StorageClass>
+  <Owner>
+    <ID>00b4903a97d432e519e18bb8fcdeb275a01a22202d877de98622726ef8e66544</ID>
+  </Owner>
+</Contents>
+<Contents>
+  <Key>test-host-2</Key>
+  <LastModified>2012-02-14T18:12:37.550Z</LastModified>
+  <ETag>"c9c2e21808090bf7bf7b91846e6ceb99"</ETag>
+  <Size>38</Size>
+  <StorageClass>STANDARD</StorageClass>
+  <Owner>
+    <ID>00b4903a97d432e519e18bb8fcdeb275a01a22202d877de98622726ef8e66544</ID>
+  </Owner>
+</Contents>
+</ListBucketResult>

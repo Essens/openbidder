@@ -1,0 +1,9 @@
+syntax = "proto2";
+package com.google.openbidder.containers;
+
+message RequestContainer
+{
+    optional string id = 1;
+    optional bytes request = 2;
+    optional bytes response = 3;
+}

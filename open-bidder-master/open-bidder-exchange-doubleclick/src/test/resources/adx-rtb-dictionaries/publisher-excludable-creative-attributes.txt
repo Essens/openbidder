@@ -1,0 +1,26 @@
+7 Tagging: IsTagged
+8 CookieTargeting: IsCookieTargeted
+9 UserInterestTargeting: IsUserInterestTargeted
+13 ExpandingDirection: ExpandingUp
+14 ExpandingDirection: ExpandingDown
+15 ExpandingDirection: ExpandingLeft
+16 ExpandingDirection: ExpandingRight
+17 ExpandingDirection: ExpandingUpLeft
+18 ExpandingDirection: ExpandingUpRight
+19 ExpandingDirection: ExpandingDownLeft
+20 ExpandingDirection: ExpandingDownRight
+21 CreativeType: Html
+22 CreativeType: VastVideo
+25 ExpandingDirection: ExpandingUpOrDown
+26 ExpandingDirection: ExpandingLeftOrRight
+27 ExpandingDirection: ExpandingAnyDiagonal
+28 ExpandingAction: RolloverToExpand
+30 InstreamVastVideoType: Vpaid Flash
+32 MraidType: Mraid 1.0
+34 RichMediaCapabilityType: RichMediaCapabilityFlash
+39 RichMediaCapabilityType: RichMediaCapabilityHTML5
+43 RichMediaCapabilityType: RichMediaCapabilityLargeExpandable
+48 RichMediaCapabilityType: RichMediaCapabilityNonSSL
+52 ExpandingDirection: ExpandingGdnApi
+70 NativeEligibility: Native Eligible
+72 NativeEligibility: Native Not Eligible

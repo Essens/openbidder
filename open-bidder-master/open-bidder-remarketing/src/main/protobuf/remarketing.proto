@@ -1,0 +1,35 @@
+// Copyright 2013 Google Inc. All Rights Reserved.
+//
+// Protobuf messages for Open Bidder Remarketing.
+//
+syntax = "proto2";
+package com.google.openbidder.remarketing.model;
+
+/**
+ * The targeted user will have a unique user id given by the publisher that is mapped to google
+ * gids, as well as a set of action ids that help segment the audience by actions. This message is
+ * used to store targeted users for Remarketing.
+ */
+message TargetedUser {
+  required string pub_user_id = 1;
+  repeated string google_gid = 2;
+  repeated string action_id = 3;
+}
+
+/**
+ * An action has a unique id as well as the state of an action: if its enabled or disabled, so that
+ * the bid interceptor will know if the buyer is still interested in a segment of the audience that
+ * performed a certain action. A description for the buyer to recall the meaning of the action. The
+ * maxCpm defines the max a publisher would bid for a targeted user with this action. Note: the
+ * amount can be manipulated in the bid interceptor. The click through url and creative are set for
+ * each action so that the bid interceptor will know what to send in the bid response. This message
+ * is used to store actions for Remarketing.
+ */
+message Action {
+  required string action_id = 1;
+  required bool is_enabled = 2;
+  optional string description = 3;
+  required uint64 max_cpm = 4;
+  required string click_through_url = 5;
+  required string creative = 6;
+}

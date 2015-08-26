@@ -1,0 +1,17 @@
+<div id="report-content">
+  <div class="report-body">
+    <h2>Performance Report</h2>
+    <p>The performance report provides information about the performance of your bidders. See the
+        <a href="https://developers.google.com/ad-exchange/rtb/report-guide#csv_performance" target="_blank">documentation</a>
+        for a detailed description of this report.</p>
+    <report-table project="project" reports="perfReports"></report-table>
+    <p ng-hide="perfReports">No performance reports available for this date.</p>
+
+    <h2>Snippet Status</h2>
+    <p>The snippet status report provides information about which creatives. See the
+        <a href="https://developers.google.com/ad-exchange/rtb/report-guide#snippet" target="_blank">documentation</a>
+        for a detailed description of this report</p>
+    <report-table project="project" reports="snippetReports"></report-table>
+    <p ng-hide="snippetReports">No snippet status reports available for this date.</p>
+  </div>
+</div>

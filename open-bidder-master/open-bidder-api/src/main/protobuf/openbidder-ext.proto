@@ -1,0 +1,77 @@
+/*
+ * Copyright 2014 Google Inc. All Rights Reserved.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
+syntax = "proto2";
+package com.google.openbidder.api.openrtb;
+option java_outer_classname = "ObExt";
+
+import "openrtb.proto";
+
+//
+// Common Extensions for the OpenRTB model (ID=100).
+//
+
+/**
+ * Common extensions for the Impression object.
+ */
+message Impression {
+  /**
+   * Pretargeted campaign IDs or similar.
+   */
+  repeated string cid = 1;
+}
+extend com.google.openrtb.BidRequest.Impression {
+  optional Impression imp = 100;
+}
+
+/**
+ * Common extensions for the Bid object.
+ */
+message Bid {
+  /**
+   * The click-through URL, and any other URLs visibile in the rendered ad.
+   * If the destination exchange only allows a single clickthrough URL to be
+   * declared, the first element here will be used and all others ignored.
+   */
+  repeated string clickThroughUrl = 1;
+  /**
+   * Parameters that will be added to {@code SnippetMacros.IMPRESSION_URL}.
+   */
+  repeated UrlParameter impressionParameter = 2;
+  /**
+   * Parameters that will be added to {@code SnippetMacros.CLICK_URL}.
+   */
+  repeated UrlParameter clickParameter = 3;
+
+  /**
+   * URL parameter.
+   */
+  message UrlParameter {
+    /**
+     * Parameter name.
+     */
+    required string name = 1;
+    /**
+     * Parameter value.
+     */
+    required string value = 2;
+  }
+
+  extensions 100 to 199;
+}
+extend com.google.openrtb.BidResponse.SeatBid.Bid {
+  optional Bid bid = 100;
+}

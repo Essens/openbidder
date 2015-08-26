@@ -1,0 +1,23 @@
+0 Error pages
+6 Parked domains
+8 Forums
+13 Sexually suggestive content
+16 Juvenile, gross & bizarre content
+21 Image-sharing pages
+23 Social networks
+24 Video-sharing pages
+26 Not Above The Fold adblock
+39 Video Content Rating DV-G
+40 Video Content Rating DV-PG
+41 Video Content Rating DV-T
+42 Video Content Rating DV-MA
+43 Video Content Not Yet Rated
+44 Live Streaming Video
+45 Military & international conflict
+52 Profanity & rough language
+55 Crime, police & emergency
+56 Death & tragedy
+57 Video
+58 Embedded video
+59 Game
+87 GMob mobile app non-interstitial

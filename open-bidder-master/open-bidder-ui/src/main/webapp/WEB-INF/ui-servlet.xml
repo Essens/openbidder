@@ -1,0 +1,78 @@
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:p="http://www.springframework.org/schema/p"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:mvc="http://www.springframework.org/schema/mvc"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans-4.0.xsd
+        http://www.springframework.org/schema/mvc
+        http://www.springframework.org/schema/mvc/spring-mvc-4.0.xsd
+        http://www.springframework.org/schema/context
+        http://www.springframework.org/schema/context/spring-context-4.0.xsd">
+
+  <context:annotation-config />
+  <context:property-placeholder location="classpath:open-bidder-ui.properties" />
+
+  <!-- this needs to go first -->
+  <bean class="com.google.openbidder.ui.config.WebConfig" />
+
+  <bean class="com.google.openbidder.ui.controller.AuthorizationController" />
+  <bean class="com.google.openbidder.ui.controller.admin.CronController" />
+  <bean class="com.google.openbidder.ui.controller.admin.PresenceController" />
+  <bean class="com.google.openbidder.ui.controller.AccountController" />
+  <bean class="com.google.openbidder.ui.controller.CustomImageController" />
+  <bean class="com.google.openbidder.ui.controller.FirewallController" />
+  <bean class="com.google.openbidder.ui.controller.DefaultImageController" />
+  <bean class="com.google.openbidder.ui.controller.InstanceController" />
+  <bean class="com.google.openbidder.ui.controller.MachineTypeController" />
+  <bean class="com.google.openbidder.ui.controller.NetworkController" />
+  <bean class="com.google.openbidder.ui.controller.RegionController" />
+  <bean class="com.google.openbidder.ui.controller.ReportController" />
+  <bean class="com.google.openbidder.ui.controller.PreferredDealsController" />
+  <bean class="com.google.openbidder.ui.controller.QuotaController" />
+  <bean class="com.google.openbidder.ui.controller.ProjectController" />
+  <bean class="com.google.openbidder.ui.controller.RemarketingController" />
+  <bean class="com.google.openbidder.ui.controller.UserController" />
+  <bean class="com.google.openbidder.ui.controller.ZoneController" />
+  <bean class="com.google.openbidder.ui.controller.TokenController" />
+  <bean class="com.google.openbidder.ui.controller.UiController" />
+
+  <bean id="messageSource"
+        class="org.springframework.context.support.ReloadableResourceBundleMessageSource"
+        p:basename="classpath:messages"
+        p:defaultEncoding="UTF-8" />
+
+  <bean class="org.springframework.web.servlet.mvc.annotation.AnnotationMethodHandlerExceptionResolver" />
+
+  <bean id="jsonView"
+        class="org.springframework.web.servlet.view.json.MappingJacksonJsonView"
+        p:extractValueFromSingleKeyModel="true" />
+
+  <bean class="org.springframework.web.servlet.handler.SimpleMappingExceptionResolver">
+    <property name="exceptionMappings">
+      <props>
+        <prop key="org.springframework.security.core.userdetails.UsernameNotFoundException">notFound</prop>
+      </props>
+    </property>
+    <property name="exceptionAttribute" value="exception" />
+    <property name="warnLogCategory" value="com.google.openbidder.ui" />
+    <property name="order" value="2" />
+  </bean>
+
+  <mvc:interceptors>
+    <bean class="com.google.openbidder.ui.interceptor.ClickJackDefenseInterceptor" />
+    <bean class="org.springframework.web.servlet.i18n.LocaleChangeInterceptor" />
+    <bean class="com.google.openbidder.ui.interceptor.XsrfValidationInterceptor" />
+  </mvc:interceptors>
+
+  <bean class="com.google.openbidder.ui.rpc.RpcExceptionHandler" />
+
+  <bean id="localeResolver" class="org.springframework.web.servlet.i18n.CookieLocaleResolver" />
+
+  <bean class="org.springframework.web.servlet.view.InternalResourceViewResolver"
+        p:exposedContextBeanNames="messageService"
+        p:viewClass="org.springframework.web.servlet.view.JstlView"
+        p:prefix="/WEB-INF/view/"
+        p:suffix=".jsp" />
+
+</beans>

@@ -1,0 +1,14 @@
+<div ng-class="{error: errors[modelName].messageType == 'ERROR'}" class="control-group">
+  <label for="{{ modelName }}" class="control-label">{{ label }}</label>
+  <div class="controls">
+    <input id="{{ modelName }}"
+           name="{{ modelName }}"
+           ng-model="ngModel"
+           class="span7"
+           type="text"
+           ng-readonly="readOnly"
+           ng-disabled="ngDisabled"/>
+    <span ng-repeat="message in errors[modelName].messages" class="help-inline">{{ message }}</span>
+    <div ng-transclude></div>
+  </div>
+</div>

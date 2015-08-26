@@ -1,0 +1,69 @@
+<page-header title="{{ instance.instanceType | titleCase }} {{ instance.resourceName }}"></page-header>
+
+<h3>Details</h3>
+<dl ng-show="instance">
+  <dt>Name</dt>
+  <dd>{{ instance.resourceName }}</dd>
+  <dt>Description</dt>
+  <dd>{{ instance.description }}</dd>
+  <dt>Zone</dt>
+  <dd>{{ instance.getZoneName() }}</dd>
+  <dt>Machine Type</dt>
+  <dd>{{ instance.getMachineTypeName() }}</dd>
+  <dt>Image</dt>
+  <dd>{{ instance.getImageName() }}</dd>
+  <dt>Network</dt>
+  <dd>{{ instance.getNetworkName() }}</dd>
+  <dt>Internal IP</dt>
+  <dd>{{ instance.internalIp }}</dd>
+  <dt>External IP</dt>
+  <dd><a ng-href="{{ instance.getStatsLink() }}" target="_blank">{{ instance.externalIp }}</a></dd>
+  <dt>Status</dt>
+  <dd>{{ instance.status | titleCase }}</dd>
+  <dt>Zone Host Name</dt>
+  <dd>{{ instance.zoneHost }}</dd>
+
+  <!-- Balancer details -->
+  <dt ng-show="instance.instanceType == InstanceType.BALANCER">Bidder Port</dt>
+  <dd ng-show="instance.instanceType == InstanceType.BALANCER">{{ instance.bidderRequestPort }}</dd>
+  <!-- End balancer details -->
+
+  <!-- Bidder details -->
+  <dt ng-show="instance.instanceType == InstanceType.BIDDER">Cloud Storage URI</dt>
+  <dd ng-show="instance.instanceType == InstanceType.BIDDER">{{ instance.userDistUri }}</dd>
+  <dt ng-show="instance.instanceType == InstanceType.BIDDER">Bidding Interceptors</dt>
+  <dd ng-show="instance.instanceType == InstanceType.BIDDER">{{ instance.interceptors.join('\n') }}</dd>
+  <dt ng-show="instance.instanceType == InstanceType.BIDDER">Impression Interceptors</dt>
+  <dd ng-show="instance.instanceType == InstanceType.BIDDER">{{ instance.impressionInterceptors.join('\n') }}</dd>
+  <dt ng-show="instance.instanceType == InstanceType.BIDDER">Click Interceptors</dt>
+  <dd ng-show="instance.instanceType == InstanceType.BIDDER">{{ instance.clickInterceptors.join('\n') }}</dd>
+  <dt ng-show="instance.instanceType == InstanceType.BIDDER">Pixel Matching Interceptors</dt>
+  <dd ng-show="instance.instanceType == InstanceType.BIDDER">{{ instance.matchInterceptors.join('\n') }}</dd>
+  <dt ng-show="instance.instanceType == InstanceType.BIDDER">JVM Parameters</dt>
+  <dd ng-show="instance.instanceType == InstanceType.BIDDER">{{ instance.jvmParameters.join(' ') }}</dd>
+  <dt ng-show="instance.instanceType == InstanceType.BIDDER">Main Parameters</dt>
+  <dd ng-show="instance.instanceType == InstanceType.BIDDER">{{ instance.mainParameters.join(' ') }}</dd>
+  <!-- End bidder details -->
+
+  <dt>Bid Request URL</dt>
+  <dd><textarea class="span7" select-on-click readonly="true">http://{{ instance.externalIp }}:{{ instance.requestPort }}/bid_request/doubleclick</textarea></dd>
+</dl>
+<h3>Debugging</h3>
+<p>
+  Debugging and maintenance of this instance can be done using secure shell (SSH). To access this
+  instance with SSH use the Google Compute Engine
+  <a href="https://cloud.google.com/sdk/gcloud/" target="_blank">gcloud</a> tool:
+</p>
+<textarea class="span12" select-on-click readonly="true">gcloud compute ssh --project {{ project.apiProjectId }} --zone {{ instance.getZoneName() }} {{ routeParams.instanceId }}</textarea>
+<p>
+  Once on the instance, examine the following logs for debugging information.
+</p>
+<dl>
+  <dt>/var/log/startupscript.log</dt>
+  <dd>Compute Engine bootstrap script log</dd>
+  <dt ng-show="instance.instanceType == InstanceType.BIDDER">/usr/local/open-bidder/logs/</dt>
+  <dd ng-show="instance.instanceType == InstanceType.BIDDER">
+    Directory containing bidder server logs.  This is where any logging from user code will be
+    (as long as it was written to SLF4J loggers), and also logging from the Open Bidder server.
+  </dd>
+</dl>

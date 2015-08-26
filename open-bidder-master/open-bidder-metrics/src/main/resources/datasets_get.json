@@ -1,0 +1,26 @@
+{
+ "kind": "bigquery#dataset",
+ "etag": "\"lJkBaCYfTrFXwh5N7-r9owDp5yw/bWnYu7EC6tJbx91LwUzzLSL8ph0\"",
+ "id": "google.com:open-bidder-test:open_bidder_test",
+ "selfLink": "https://content.googleapis.com/bigquery/v2/projects/google.com:open-bidder-test/datasets/open_bidder_test",
+ "datasetReference": {
+  "datasetId": "open_bidder_test",
+  "projectId": "google.com:open-bidder-test"
+ },
+ "access": [
+  {
+   "role": "READER",
+   "specialGroup": "projectReaders"
+  },
+  {
+   "role": "WRITER",
+   "specialGroup": "projectWriters"
+  },
+  {
+   "role": "OWNER",
+   "specialGroup": "projectOwners"
+  }
+ ],
+ "creationTime": "1342878053843",
+ "lastModifiedTime": "1342878053843"
+}

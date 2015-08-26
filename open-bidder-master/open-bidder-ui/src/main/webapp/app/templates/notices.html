@@ -1,0 +1,13 @@
+<div class="notices">
+  <div class="container">
+    <div ng-repeat="notice in notices" ng-class="'alert alert-' + notice.type">
+      <button type="button" class="close" ng-click="notices.splice($index, 1)">x</button>
+      {{ notice.content }}
+      <a ng-click="notice.expand = !notice.expand" ng-show="notice.extraContent">
+        <span ng-show="notice.expand">less...</span>
+        <span ng-hide="notice.expand">more...</span>
+      </a>
+      <div class="accordion-inner" ng-show="notice.expand">{{ notice.extraContent }}</div>
+    </div>
+  </div>
+</div>

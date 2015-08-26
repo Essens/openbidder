@@ -1,0 +1,114 @@
+global
+    maxconn         <%= Integer(@processorcount) * Integer(@maxconn_core) %>
+    chroot          <%= @chroot_dir %>
+    user            haproxy
+    group           haproxy
+    daemon
+    nbproc          <%= @number_of_processes %>
+    pidfile         /var/run/haproxy.pid
+    log             127.0.0.1       local0 <%= @log_level %>
+    tune.bufsize    65536
+
+defaults
+    log           global
+    mode          http
+    option        httplog
+    option        dontlog-normal
+
+    # When the option is specified, a session with an incoming channel closed will be
+    # aborted while it is still possible, either pending in the queue for a connection slot, or
+    # during the connection establishment
+    option abortonclose
+
+    # Enables HTTP connection-close mode on the server side while keeping the ability to
+    # support HTTP keep-alive and pipelining on the client side.
+    option http-server-close
+
+    timeout client <%= @timeout_client_ms %>ms
+    timeout http-keep-alive <%= @timeout_http_keep_alive_ms %>ms
+
+backend bidders
+    mode          http
+    balance       roundrobin
+    retries       0
+
+    timeout connect       <%= @bidder_timeout_connect_ms %>ms
+    timeout queue         <%= @bidder_timeout_queue_ms %>ms
+    timeout server        <%= @bidder_timeout_server_ms %>ms
+
+    option        httpchk GET /admin/healthcheck
+
+    # Bidders
+<% @bidders.each do |bidder| -%>
+    server        <%= bidder['ip'] %> <%= bidder['ip'] %>:<%= @bidder_request_port %> maxconn <%= Integer(bidder['cpus']) * Integer(@bidder_max_conn_core) %> maxqueue <%= @bidder_max_queued %> check
+<% end -%>
+
+backend impression_trackers
+    mode          http
+    balance       roundrobin
+    retries       0
+
+    timeout connect       <%= @impression_timeout_connect_ms %>ms
+    timeout queue         <%= @impression_timeout_queue_ms %>ms
+    timeout server        <%= @impression_timeout_server_ms %>ms
+
+    option        httpchk GET /admin/healthcheck
+
+    # Impression Trackers
+<% @bidders.each do |bidder| -%>
+    server        <%= bidder['ip'] %> <%= bidder['ip'] %>:<%= @bidder_request_port %> maxconn <%= Integer(bidder['cpus']) * Integer(@impression_max_conn_core) %> maxqueue <%= @impression_max_queued %> check
+<% end -%>
+
+backend click_trackers
+    mode          http
+    balance       roundrobin
+    retries       0
+
+    timeout connect       <%= @click_timeout_connect_ms %>ms
+    timeout queue         <%= @click_timeout_queue_ms %>ms
+    timeout server        <%= @click_timeout_server_ms %>ms
+
+    option        httpchk GET /admin/healthcheck
+
+    # Click Trackers
+<% @bidders.each do |bidder| -%>
+    server        <%= bidder['ip'] %> <%= bidder['ip'] %>:<%= @bidder_request_port %> maxconn <%= Integer(bidder['cpus']) * Integer(@click_max_conn_core) %> maxqueue <%= @click_max_queued %> check
+<% end -%>
+
+backend pixel_trackers
+    mode          http
+    balance       roundrobin
+    retries       0
+
+    timeout connect       <%= @pixel_timeout_connect_ms %>ms
+    timeout queue         <%= @pixel_timeout_queue_ms %>ms
+    timeout server        <%= @pixel_timeout_server_ms %>ms
+
+    option        httpchk GET /admin/healthcheck
+
+    # Pixel Trackers
+<% @bidders.each do |bidder| -%>
+    server        <%= bidder['ip'] %> <%= bidder['ip'] %>:<%= @bidder_request_port %> maxconn <%= Integer(bidder['cpus']) * Integer(@pixel_max_conn_core) %> maxqueue <%= @pixel_max_queued %> check
+<% end -%>
+
+listen stats *:<%= @stats_port %>
+    mode    http
+
+    stats   enable
+    stats   uri  /stats
+
+listen requests *:<%= @request_port %>
+    mode http
+
+    # ACL Rules
+    acl is_bid_request path_beg /bid_request
+    acl is_impression_request path_beg /impression
+    acl is_click_request path_beg /click
+    acl is_pixel_request path_beg /match
+
+    # Backend rules
+    use_backend bidders if is_bid_request
+    use_backend impression_trackers if is_impression_request
+    use_backend click_trackers if is_click_request
+    use_backend pixel_trackers if is_pixel_request
+

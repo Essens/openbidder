@@ -1,0 +1,7 @@
+# Ensure we're listening for connections
+$ModLoad imudp
+$UDPServerRun 514
+$UDPServerAddress 127.0.0.1
+
+local0.* <%= @log_dir %>/haproxy_1.log
+& ~

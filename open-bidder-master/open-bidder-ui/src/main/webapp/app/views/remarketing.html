@@ -1,0 +1,78 @@
+<page-header title="Remarketing"></page-header>
+
+<p ng-show="projectNotFound">Project not found.</p>
+
+<p ng-show="project && !project.authorized">
+  You must <a ng-click="project.authorize()">authorize</a>
+  Open Bidder to access Google Compute Engine on your behalf.
+</p>
+
+<div ng-show="project.authorized">
+  <p>To build a target audience, simply create a set of actions. Enter a description so that you can
+    identify different actions. Once you have added the action, a html snippet is generated. You
+    need to place that snippet into the pages that you would like to build your audience from.</p>
+
+  <h3>Add an Action</h3>
+  <form class="form-horizontal" ng-submit="errors = null; addRemarketingAction()">
+    <div class="control-group">
+      <text-input label="Action Id" ng-model="actionId" errors="errors">
+        <help-block>Create a unique id for an action.</help-block>
+      </text-input>
+      <text-input label="Description" ng-model="description" errors="errors">
+        <help-block>Used to identify the different actions.</help-block>
+      </text-input>
+      <label class="control-label" for="inputState">Enable Rule</label>
+      <div class="controls">
+        <input type="checkbox" id="inputState" ng-model="isEnabled" checked="false">
+        <help-block>Check to be active.</help-block>
+      </div>
+      <text-input label="Max CPM" ng-model="maxCpm" errors="errors">
+        <help-block>Maximum CPM.</help-block>
+      </text-input>
+      <text-input label="Click Through URL" ng-model="clickThroughUrl" errors="errors">
+        <help-block>A click through URL for the advert.</help-block>
+      </text-input>
+      <text-input label="Creative" ng-model="creative" errors="errors">
+        <help-block>A html snippet that has your creative embedded in it.</help-block>
+      </text-input>
+    </div>
+    <div class="form-actions">
+      <button type="submit" class="btn btn-primary">Add Action</button>
+    </div>
+  </form>
+
+  <h3>Existing Actions</h3>
+  <table class="table table-striped table-bordered">
+    <thead>
+    <tr>
+      <th></th>
+      <th>ID</th>
+      <th>Description</th>
+      <th>Snippet</th>
+      <th>Click Through URL</th>
+      <th>Creative</th>
+      <th>Max CPM</th>
+      <th>State</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr ng-repeat="action in actions">
+      <td><input type="checkbox" ng-model="action.selected"></td>
+      <td>{{ action.actionId }}</td>
+      <td>{{ action.description }}</td>
+      <td>
+        <pre><p>&lt;img src="http://cm.g.doubleclick.net/pixel?google_nid={{ project.cookieMatchNid }}&google_cm&add_action={{ action.actionId }}" /&gt</p></pre>
+      </td>
+      <td>{{ action.clickThroughUrl }}</td>
+      <td>{{ action.creative }}</td>
+      <td>{{ action.maxCpm }}</td>
+      <td>{{ getState(action.isEnabled) }}</td>
+    </tr>
+    </tbody>
+  </table>
+  <div class="btn-toolbar pagination-centered form-actions">
+    <button class="btn btn-success" ng-click="errors = null; updateRemarketingAction(true)">Enable Selected</button>
+    <button class="btn btn-warning" ng-click="errors = null; updateRemarketingAction(false)">Disable Selected</button>
+    <button class="btn btn-danger" ng-click="errors = null; deleteRemarketingAction()">Delete Selected</button>
+  </div>
+</div>

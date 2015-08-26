@@ -1,0 +1,9 @@
+ulimit -H -n 32768
+ulimit -S -n 32768
+
+NOSTART=0
+VERBOSE=yes
+
+JAVA_OPTS="<%= @jvm_options %>"
+
+MAIN_OPTS="<%= @main_options %>"
