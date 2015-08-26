@@ -59,7 +59,7 @@ implements OpenRtbMapper<String, String, StringBuilder, StringBuilder> {
                 //fromJson
                 mobitrans.openbidder.entities.BidRequest bidRequest = gson.fromJson(nativeRequest, mobitrans.openbidder.entities.BidRequest.class);
                 
-                OpenRtb.BidRequest.parseFrom(data)
+                //OpenRtb.BidRequest.parseFrom(data)
                 
                 return null;
                   
