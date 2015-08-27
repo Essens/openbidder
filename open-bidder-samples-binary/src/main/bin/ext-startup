@@ -1,6 +1,0 @@
-# Sample Extended Startup script. If this script exists in /bin, it will be invoked after
-# the core bootstrapping script. This script cannot fail if it was already executed before
-# (actions should be incremental, or idempotent, or skipped if already performed),
-# as the entire bootstrapping is re-executed on reboots or even periodically.
-
-echo "Sample extended startup done."

@@ -50,8 +50,6 @@
     <module>open-bidder-puppet</module>
     <module>open-bidder-requester</module>
     <module>open-bidder-remarketing</module>
-    <module>open-bidder-samples</module>
-    <module>open-bidder-samples-binary</module>
     <module>open-bidder-server</module>
     <module>open-bidder-servlet</module>
     <module>open-bidder-storage</module>
@@ -62,6 +60,8 @@
     <module>open-bidder-util</module>
     <module>open-bidder-weather</module>
     <module>open-bidder-master</module>
+    <module>mobitrans-openrtb-bidder</module>
+    <module>mobitrans-openrtb-server</module>
   </modules>
 
   <prerequisites>
