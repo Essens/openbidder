@@ -24,6 +24,8 @@ import com.google.openbidder.api.bidding.BidResponse;
 import com.google.openbidder.api.interceptor.InterceptorChain;
 import com.google.openrtb.OpenRtb.BidRequest.Imp;
 import com.google.openrtb.OpenRtb.BidResponse.SeatBid.Bid;
+import java.util.UUID;
+import static java.util.UUID.randomUUID;
 
 /**
  * Dummy example interceptor: will make a random bid for all impressions.
@@ -36,16 +38,32 @@ public class RandomBidInterceptor implements BidInterceptor {
 
     /*** PRE-PROCESSING STEP ***/
 
-    for (Imp imp : chain.request().imps()) {
-      // Compute a random value in the range [bidFloor..bidFloor*2].
-      double price = imp.getBidfloor() * (1 + random());
 
-      // New bids are added to the Response.
-      chain.response().addBid(Bid.newBuilder()
-          .setId("1")
-          .setImpid(imp.getId())
-          .setPrice(price)
-          .setAdm("snippet").build());
+        for (Imp imp : chain.request().imps()) {
+            double price = imp.getBidfloor();
+
+            if (chain.request() != null) {
+                UUID bidId = randomUUID();
+                Bid responseBid = Bid.newBuilder()
+                        .setId(bidId.toString())
+                        .setImpid(imp.getId())
+                        .setPrice(price)
+                        //.setAdm("snippet")
+                        .build();
+
+                chain.response().addBid(responseBid);             
+
+                //CounterCache.BidsPerSecondCounter.incrementAndGet();
+            }
+        }
+
+        //CounterCache.RequestsPerSecondCounter.incrementAndGet();
+      
+      chain.proceed();
+      
+      /* DECIDE TO BID OR NOT */
+
+      
     }
 
     /**** FIRE NEXT INTERCEPTOR IN THE CHAIN ****/
