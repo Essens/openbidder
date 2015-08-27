@@ -9,7 +9,6 @@ import com.google.openbidder.api.bidding.BidInterceptor;
 import com.google.openbidder.api.bidding.BidRequest;
 import com.google.openbidder.api.bidding.BidResponse;
 import com.google.openbidder.api.interceptor.InterceptorChain;
-import com.google.openbidder.api.openrtb.ObExt;
 import com.google.openrtb.OpenRtb.BidRequest.Imp;
 import com.google.openrtb.OpenRtb.BidResponse.SeatBid.Bid;
 
@@ -27,8 +26,7 @@ public class SimpleInterceptor implements BidInterceptor {
                     .setId("1")
                     .setImpid(imp.getId())
                     .setPrice(imp.getBidfloor() * 2)
-                    .setAdm("...ad snippet...")
-                    .addExtension(ObExt.bidClickThroughUrl, "https://wikipedia.org"));
+                    .setAdm("...ad snippet..."));
         }
 
         chain.proceed();

@@ -61,6 +61,7 @@
     <module>open-bidder-ui</module>
     <module>open-bidder-util</module>
     <module>open-bidder-weather</module>
+    <module>open-bidder-master</module>
   </modules>
 
   <prerequisites>

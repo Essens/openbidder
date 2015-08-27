@@ -100,7 +100,7 @@ implements OpenRtbMapper<String, String, StringBuilder, StringBuilder> {
                         .setOs(bidRequest.getDevice().getOs())
                         .setMake(bidRequest.getDevice().getMake())
                         .build();
-               BidRequest.Imp impObj = BidRequest.Imp.newBuilder()
+               //BidRequest.Imp impObj = BidRequest.Imp.newBuilder()
                 
                 return OpenRtb.BidRequest.newBuilder()
                         .setId(bidRequest.getId())

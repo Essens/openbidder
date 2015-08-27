@@ -37,8 +37,8 @@ public class SamplesServer extends BidderServer {
             args[0] = "--api_project_id=openbid1";
             args[1] = "--api_project_number=549127527448";
             args[2] = "--service_account_id=549127527448-23e5rqafu4lqeuh740r91b12pb696nro@developer.gserviceaccount.com";
-            args[3] = "--p12_file_path=D:\\TFSProjects\\rtb\\Code\\bidder.p12";
-            args[4] = "--bid_interceptors=com.google.openbidder.sample.bidding.RandomBidInterceptor";
+            args[3] = "--p12_file_path=D:\\OpenBidder\\GitHub\\bidder.p12";
+            args[4] = "--bid_interceptors=mobitrans.openbidder.bidding.RandomBidInterceptor";
             args[5] = "--impression_interceptors=";
             args[6] = "--listen_port=18081";
             args[7] = "--load_balancer_port=18080";
