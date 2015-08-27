@@ -63,12 +63,6 @@ public class RandomBidInterceptor implements BidInterceptor {
       
       /* DECIDE TO BID OR NOT */
 
-      
-    }
-
-    /**** FIRE NEXT INTERCEPTOR IN THE CHAIN ****/
-
-    chain.proceed();
 
     /*** POST-PROCESSING STEP ***/
 
