@@ -40,7 +40,7 @@
     </dependency>
     <dependency>
       <groupId>com.google.openbidder</groupId>
-      <artifactId>open-bidder-samples</artifactId>
+      <artifactId>mobitrans-openrtb-bidder</artifactId>
       <version>${project.version}</version>
     </dependency>
     <dependency>
@@ -167,7 +167,7 @@
             <groupId>org.codehaus.mojo</groupId>
             <artifactId>appassembler-maven-plugin</artifactId>
             <configuration>
-              <unixScriptTemplate>${project.build.directory}/generated-binary/appassembler/template.sh</unixScriptTemplate>
+<!--              <unixScriptTemplate>${project.build.directory}/generated-binary/appassembler/template.sh</unixScriptTemplate>-->
               <copyConfigurationDirectory>true</copyConfigurationDirectory>
               <repositoryLayout>flat</repositoryLayout>
               <repositoryName>lib</repositoryName>
