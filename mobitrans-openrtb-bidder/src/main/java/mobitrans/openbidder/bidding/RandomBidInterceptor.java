@@ -13,7 +13,6 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
 package mobitrans.openbidder.bidding;
 
 import static java.lang.Math.random;
@@ -28,6 +27,8 @@ import com.google.protos.adx.NetworkBid;
 import java.util.UUID;
 import static java.util.UUID.randomUUID;
 import java.util.concurrent.TimeUnit;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Dummy example interceptor: will make a random bid for all impressions.
@@ -35,11 +36,20 @@ import java.util.concurrent.TimeUnit;
  */
 public class RandomBidInterceptor implements BidInterceptor {
 
-  @Override
-  public void execute(InterceptorChain<BidRequest, BidResponse> chain) {
+    private static final Logger logger = LoggerFactory.getLogger(RandomBidInterceptor.class);
 
-        /*** PRE-PROCESSING STEP ***/
+    public RandomBidInterceptor() {
+        logger.warn("started!!!!!!!!!!");
+    }
 
+    @Override
+    public void execute(InterceptorChain<BidRequest, BidResponse> chain) {
+
+        logger.warn("executed!!!!!!!!!!");
+
+        /**
+         * * PRE-PROCESSING STEP **
+         */
         for (Imp imp : chain.request().imps()) {
             double price = imp.getBidfloor();
 
@@ -52,7 +62,6 @@ public class RandomBidInterceptor implements BidInterceptor {
                         .build();
 
                 //chain.response().addBid(responseBid);             
-
                 chain.response()
                         .seatBid()
                         //.setSeat(null) //To check if this is used
@@ -62,29 +71,29 @@ public class RandomBidInterceptor implements BidInterceptor {
         }
 
         //CounterCache.RequestsPerSecondCounter.incrementAndGet();
-      
-      chain.proceed();
-      
-    /****** SAMPLE CODE ******/
-      
-    //    for (Imp imp : chain.request().imps()) {
-    //      // Compute a random value in the range [bidFloor..bidFloor*2].
-    //      double price = imp.getBidfloor() * (1 + random());
-    //
-    //      // New bids are added to the Response.
-    //      chain.response().addBid(Bid.newBuilder()
-    //          .setId("1")
-    //          .setImpid(imp.getId())
-    //          .setPrice(price)
-    //          .setAdm("snippet").build());
-    //    }
+        chain.proceed();
 
-    /**** FIRE NEXT INTERCEPTOR IN THE CHAIN ****/
-
-    //chain.proceed();
-
-    /*** POST-PROCESSING STEP ***/
-
-    // This interceptor doesn't have any post-processing.
-  }
+        /**
+         * **** SAMPLE CODE *****
+         */
+        //    for (Imp imp : chain.request().imps()) {
+        //      // Compute a random value in the range [bidFloor..bidFloor*2].
+        //      double price = imp.getBidfloor() * (1 + random());
+        //
+        //      // New bids are added to the Response.
+        //      chain.response().addBid(Bid.newBuilder()
+        //          .setId("1")
+        //          .setImpid(imp.getId())
+        //          .setPrice(price)
+        //          .setAdm("snippet").build());
+        //    }
+        /**
+         * ** FIRE NEXT INTERCEPTOR IN THE CHAIN ***
+         */
+        //chain.proceed();
+        /**
+         * * POST-PROCESSING STEP **
+         */
+        // This interceptor doesn't have any post-processing.
+    }
 }
