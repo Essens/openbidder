@@ -49,12 +49,15 @@ public class RandomBidInterceptor implements BidInterceptor {
                         .setId(bidId.toString())
                         .setImpid(imp.getId())
                         .setPrice(price)
-                        //.setAdm("snippet")
                         .build();
 
-                chain.response().addBid(responseBid);             
+                //chain.response().addBid(responseBid);             
 
-                //CounterCache.BidsPerSecondCounter.incrementAndGet();
+                chain.response()
+                        .seatBid()
+                        //.setSeat(null) //To check if this is used
+                        .setGroup(false) //0 = impressions can be won individually; 1 = impressions must be won or lost as a group.
+                        .addBid(responseBid);
             }
         }
 
@@ -62,19 +65,19 @@ public class RandomBidInterceptor implements BidInterceptor {
       
       chain.proceed();
       
-      /****** SAMPLE CODE ******/
+    /****** SAMPLE CODE ******/
       
-//    for (Imp imp : chain.request().imps()) {
-//      // Compute a random value in the range [bidFloor..bidFloor*2].
-//      double price = imp.getBidfloor() * (1 + random());
-//
-//      // New bids are added to the Response.
-//      chain.response().addBid(Bid.newBuilder()
-//          .setId("1")
-//          .setImpid(imp.getId())
-//          .setPrice(price)
-//          .setAdm("snippet").build());
-//    }
+    //    for (Imp imp : chain.request().imps()) {
+    //      // Compute a random value in the range [bidFloor..bidFloor*2].
+    //      double price = imp.getBidfloor() * (1 + random());
+    //
+    //      // New bids are added to the Response.
+    //      chain.response().addBid(Bid.newBuilder()
+    //          .setId("1")
+    //          .setImpid(imp.getId())
+    //          .setPrice(price)
+    //          .setAdm("snippet").build());
+    //    }
 
     /**** FIRE NEXT INTERCEPTOR IN THE CHAIN ****/
 
