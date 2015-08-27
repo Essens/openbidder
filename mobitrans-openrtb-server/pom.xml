@@ -1,0 +1,220 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+
+  <artifactId>mobitrans-openrtb-server</artifactId>
+  <packaging>jar</packaging>
+  <name>Mobitrans OpenRTB Server</name>
+  <description>
+    This projects shows how to package your bidder. Ideally you should write interceptors and other
+    custom code in a separate project that depends/imports only the necessary API modules, and then
+    have a separate binary module like this that just glues your code to the bidder core in order
+    to produce the deployable tarball. You can just clone this entire project, and make a few
+    changes following the comments marked with "CHANGE".
+  </description>
+
+  <parent>
+    <!-- CHANGE to your own master POM. -->
+    <groupId>com.google.openbidder</groupId>
+    <artifactId>openbidder</artifactId>
+    <version>0.8.1</version>
+  </parent>
+
+  <dependencies>
+    <!-- Core binary modules. -->
+    <dependency>
+      <groupId>com.google.openbidder</groupId>
+      <artifactId>open-bidder-binary</artifactId>
+      <version>${project.version}</version>
+    </dependency>
+
+    <!-- CHANGE to your own application modules. -->
+<!--    <dependency>
+      <groupId>com.google.openbidder</groupId>
+      <artifactId>open-bidder-binary</artifactId>
+      <version>${project.version}</version>
+    </dependency>-->
+    <dependency>
+      <groupId>com.google.openbidder</groupId>
+      <artifactId>open-bidder-deals</artifactId>
+      <version>${project.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>com.google.openbidder</groupId>
+      <artifactId>open-bidder-samples</artifactId>
+      <version>${project.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>com.google.openbidder</groupId>
+      <artifactId>open-bidder-weather</artifactId>
+      <version>${project.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>com.google.openbidder</groupId>
+      <artifactId>open-bidder-remarketing</artifactId>
+      <version>${project.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>com.google.openbidder</groupId>
+      <artifactId>open-bidder-gcs</artifactId>
+      <version>${project.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>com.google.openbidder</groupId>
+      <artifactId>open-bidder-storage</artifactId>
+      <version>${project.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>com.google.openbidder</groupId>
+      <artifactId>open-bidder-bigquery</artifactId>
+      <version>${project.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>com.google.openbidder</groupId>
+      <artifactId>open-bidder-metrics</artifactId>
+      <version>${project.version}</version>
+    </dependency>
+
+    <!-- DoubleClick connector. -->
+    <dependency>
+      <groupId>com.google.openbidder</groupId>
+      <artifactId>open-bidder-exchange-doubleclick</artifactId>
+      <version>${project.version}</version>
+    </dependency>
+
+    <!-- Jetty stack only; can be removed if you only need Netty. -->
+    <dependency>
+      <groupId>com.google.openbidder</groupId>
+      <artifactId>open-bidder-jetty</artifactId>
+      <version>${project.version}</version>
+      <scope>runtime</scope>
+    </dependency>
+
+    <!-- Netty stack only; can be removed if you only need Jetty. -->
+    <dependency>
+      <groupId>com.google.openbidder</groupId>
+      <artifactId>open-bidder-netty-server</artifactId>
+      <version>${project.version}</version>
+      <scope>runtime</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.javassist</groupId>
+      <artifactId>javassist</artifactId>
+      <version>${javassistVersion}</version>
+      <scope>runtime</scope>
+    </dependency>
+
+    <!-- Test-scope dependencies. -->
+    <dependency>
+      <groupId>com.google.openbidder</groupId>
+      <artifactId>open-bidder-api</artifactId>
+      <version>${project.version}</version>
+      <type>test-jar</type>
+      <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>com.google.openbidder</groupId>
+      <artifactId>open-bidder-exchange-doubleclick</artifactId>
+      <version>${project.version}</version>
+      <type>test-jar</type>
+      <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>io.fastjson</groupId>
+      <artifactId>boon</artifactId>
+      <version>0.33</version>
+    </dependency>
+  </dependencies>
+
+  <build>
+    <resources>
+      <resource>
+        <directory>${basedir}/src/main/resources</directory>
+      </resource>
+    </resources>
+  </build>
+
+  <profiles>
+    <profile>
+      <id>full</id>
+      <activation>
+        <property>
+          <name>!m2e.version</name>
+        </property>
+      </activation>
+      <build>
+        <plugins>
+          <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-dependency-plugin</artifactId>
+            <executions>
+              <execution>
+                <id>unpack-binary</id>
+                <goals>
+                  <goal>unpack-dependencies</goal>
+                </goals>
+                <phase>generate-resources</phase>
+                <configuration>
+                 <outputDirectory>${project.build.directory}/generated-binary</outputDirectory>
+                 <includeArtifacIds>open-bidder-binary</includeArtifacIds>
+                 <includeClassifiers>shared</includeClassifiers>
+                 <excludeTransitive>true</excludeTransitive>
+                </configuration>
+              </execution>
+            </executions>
+          </plugin>
+
+          <plugin>
+            <groupId>org.codehaus.mojo</groupId>
+            <artifactId>appassembler-maven-plugin</artifactId>
+            <configuration>
+              <unixScriptTemplate>${project.build.directory}/generated-binary/appassembler/template.sh</unixScriptTemplate>
+              <copyConfigurationDirectory>true</copyConfigurationDirectory>
+              <repositoryLayout>flat</repositoryLayout>
+              <repositoryName>lib</repositoryName>
+              <platforms>
+                <platform>unix</platform>
+              </platforms>
+              <programs>
+                <program>
+                  <id>bidder</id>
+                  <!-- CHANGE to your own main class, in this project. -->
+                  <mainClass>com.google.openbidder.sample.SamplesServer</mainClass>
+                  <jvmSettings>
+                    <systemProperties>
+                      <systemProperty>jetty.home=$BASEDIR</systemProperty>
+                    </systemProperties>
+                  </jvmSettings>
+                </program>
+              </programs>
+            </configuration>
+            <executions>
+              <execution>
+                <id>assemble</id>
+                <phase>package</phase>
+                <goals>
+                  <goal>assemble</goal>
+                </goals>
+              </execution>
+            </executions>
+          </plugin>
+
+          <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-assembly-plugin</artifactId>
+            <executions>
+              <execution>
+                <phase>package</phase>
+                <goals>
+                  <goal>single</goal>
+                </goals>
+              </execution>
+            </executions>
+            <configuration>
+              <descriptor>src/main/assembly/tarball.xml</descriptor>
+            </configuration>
+          </plugin>
+        </plugins>
+      </build>
+    </profile>
+  </profiles>
+</project>
