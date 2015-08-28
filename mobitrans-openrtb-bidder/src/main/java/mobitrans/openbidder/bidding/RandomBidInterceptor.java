@@ -31,10 +31,9 @@ import java.util.TimerTask;
 import static java.util.UUID.randomUUID;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import mobitrans.openbidder.data.bidding.Rule;
-import mobitrans.openbidder.data.bidding.Creative;
-import mobitrans.openbidder.data.bidding.Config;
-
+import mobitrans.openbidder.data.bidding.*;
+import mobitrans.openbidder.workers.*;
+import mobitrans.openbidder.cache.*;
 
 public class RandomBidInterceptor implements BidInterceptor {
 
@@ -66,7 +65,7 @@ public class RandomBidInterceptor implements BidInterceptor {
 //        for (int i = 0; i < 40; i++) {
 //            new RedisWorker().start();
 //        }
-
+*/
         logger.error("Starting the Creatives, Rules, and Config Workers....");
 
         // 2. Running Creatives/Rules worker threads
@@ -111,7 +110,7 @@ public class RandomBidInterceptor implements BidInterceptor {
 
         logger.error("Finished Constructing the SimpleBidInterceptor....");
                 
-        */
+        
     }
     
     
@@ -154,3 +153,4 @@ public class RandomBidInterceptor implements BidInterceptor {
 
   }
 }
+
