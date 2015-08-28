@@ -27,15 +27,18 @@ import com.google.openrtb.OpenRtb.BidResponse.SeatBid.Bid;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Timer;
-import java.util.UUID;
+import java.util.TimerTask;
 import static java.util.UUID.randomUUID;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import mobitrans.openbidder.data.bidding.Rule;
+import mobitrans.openbidder.data.bidding.Creative;
+import mobitrans.openbidder.data.bidding.Config;
 
 
 public class RandomBidInterceptor implements BidInterceptor {
 
-       private final Logger logger = LoggerFactory.getLogger(RandomBidInterceptor.class);
+    private final Logger logger = LoggerFactory.getLogger(RandomBidInterceptor.class);
 
     // To regularly count received requests/second
     private final Timer CounterTimer = new Timer();
@@ -53,10 +56,62 @@ public class RandomBidInterceptor implements BidInterceptor {
     private List<Config> Configs = new ArrayList<Config>();
 
     // To build bid responses
-    private NativeBidBuilder BidBuilder = new NativeBidBuilder();
+    //private NativeBidBuilder BidBuilder = new NativeBidBuilder();
     
     public RandomBidInterceptor(){
-        
+        /*
+        logger.error("Constructing the RandomBidInterceptor....");
+
+        // 1. Running Redis worker threads 
+//        for (int i = 0; i < 40; i++) {
+//            new RedisWorker().start();
+//        }
+
+        logger.error("Starting the Creatives, Rules, and Config Workers....");
+
+        // 2. Running Creatives/Rules worker threads
+        new CreativesWorker().start();
+        new RulesWorker().start();
+        new ConfigWorker().start();
+
+        logger.error("Starting the Counter Timer....");
+
+        // 3. Schedule the timer to record the number of BidRequests received
+        CounterTimer.scheduleAtFixedRate(new CounterTimerWorker(), 0, 1000);
+
+        logger.error("Starting the Cacher Timer....");
+
+        // 4. Schedule the timer to update local cache
+        CacheTimer.scheduleAtFixedRate(new TimerTask() {
+            @Override
+            public void run() {
+
+                synchronized (CreativesCache.Cache) {
+                    Creatives.clear();
+                    for (Creative c : CreativesCache.Cache) {
+                        Creatives.add(c);
+                    }
+                }
+
+                synchronized (RulesCache.Cache) {
+                    Rules.clear();
+                    for (Rule r : RulesCache.Cache) {
+                        Rules.add(r);
+                    }
+                }
+
+                synchronized (ConfigsCache.Cache) {
+                    Configs.clear();
+                    for (Config c : ConfigsCache.Cache) {
+                        Configs.add(c);
+                    }
+                }
+            }
+        }, 0, 5000);
+
+        logger.error("Finished Constructing the SimpleBidInterceptor....");
+                
+        */
     }
     
     
@@ -84,10 +139,10 @@ public class RandomBidInterceptor implements BidInterceptor {
                         .setCid("1")//Campaign id
                         .setCrid("1")//Creative id
                         .build();
-
-                //chain.response().addBid(responseBid);             
+             
                 chain.response()
                         .seatBid()
+                        .setSeat("2") //check the seat value
                         .setGroup(false) //0 = impressions can be won individually; 1 = impressions must be won or lost as a group.
                         .addBid(responseBid);
                         
