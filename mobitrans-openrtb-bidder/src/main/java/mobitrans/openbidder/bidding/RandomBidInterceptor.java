@@ -24,62 +24,78 @@ import com.google.openbidder.api.bidding.BidResponse;
 import com.google.openbidder.api.interceptor.InterceptorChain;
 import com.google.openrtb.OpenRtb.BidRequest.Imp;
 import com.google.openrtb.OpenRtb.BidResponse.SeatBid.Bid;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Timer;
 import java.util.UUID;
 import static java.util.UUID.randomUUID;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
-/**
- * Dummy example interceptor: will make a random bid for all impressions.
- * Totally useless, but shows how to create a simple interceptor.
- */
+
 public class RandomBidInterceptor implements BidInterceptor {
 
+       private final Logger logger = LoggerFactory.getLogger(RandomBidInterceptor.class);
+
+    // To regularly count received requests/second
+    private final Timer CounterTimer = new Timer();
+
+    // To regularly update the local cache
+    private final Timer CacheTimer = new Timer();
+
+    // Local cache of all the rules fetched from the DB.
+    private List<Rule> Rules = new ArrayList<Rule>();
+
+    // Local cache of all creatives fetched from the DB.
+    private List<Creative> Creatives = new ArrayList<Creative>();
+
+    // Local cache of all the config values fetched from the DB.
+    private List<Config> Configs = new ArrayList<Config>();
+
+    // To build bid responses
+    private NativeBidBuilder BidBuilder = new NativeBidBuilder();
+    
+    public RandomBidInterceptor(){
+        
+    }
+    
+    
   @Override
   public void execute(InterceptorChain<BidRequest, BidResponse> chain) {
 
       for (Imp imp : chain.request().imps()) {
-            double price = imp.getBidfloor();
 
             if (chain.request() != null) {
-                UUID bidId = randomUUID();
+                
+                if(!chain.response().openRtb().hasId()){
+                    chain.response().openRtb().setId(randomUUID().toString());
+                }
+                chain.response().openRtb().setCur("USD"); //Checkk if we use different currency
+                
                 Bid responseBid = Bid.newBuilder()
-                        .setId(bidId.toString())
+                        .setId(randomUUID().toString())
                         .setImpid(imp.getId())
-                        .setPrice(price)
+                        .setPrice(imp.getBidfloor())
+                        .setAdid("1") //get from database
+                        .setNurl("http://m.mobileacademy.com?campaignid=1&forcedPage=727") //get from database
+                        .setAdm("<a href=\\\"http://ads.com/click/112770_1386565997\\\"><img src=\\\"http://ads.com/img/112770_1386565997?won=${AUCTION_PRICE}\\\" width=\\\"728\\\" height=\\\"90\\\" border=\\\"0\\\" alt=\\\"Advertisement\\\" /></a>") //get from database
+                        .setAdomain(0,"mobileacademy.com")
+                        .setIurl("http://m.mobileacademy.com/banerimg.jpg")
+                        .setCid("1")//Campaign id
+                        .setCrid("1")//Creative id
                         .build();
 
                 //chain.response().addBid(responseBid);             
                 chain.response()
                         .seatBid()
-                        //.setSeat(null) //To check if this is used
                         .setGroup(false) //0 = impressions can be won individually; 1 = impressions must be won or lost as a group.
                         .addBid(responseBid);
+                        
             }
         }
 
-        //CounterCache.RequestsPerSecondCounter.incrementAndGet();
         chain.proceed();
     
-//    /*** PRE-PROCESSING STEP ***/
-//
-//    for (Imp imp : chain.request().imps()) {
-//      // Compute a random value in the range [bidFloor..bidFloor*2].
-//      double price = imp.getBidfloor() * (1 + random());
-//
-//      // New bids are added to the Response.
-//      chain.response().addBid(Bid.newBuilder()
-//          .setId("1")
-//          .setImpid(imp.getId())
-//          .setPrice(price)
-//          .setAdm("snippet").build());
-//    }
-//
-//    /**** FIRE NEXT INTERCEPTOR IN THE CHAIN ****/
-//
-//    chain.proceed();
-//
-//    /*** POST-PROCESSING STEP ***/
-//
-//    // This interceptor doesn't have any post-processing.
-    
+
   }
 }
