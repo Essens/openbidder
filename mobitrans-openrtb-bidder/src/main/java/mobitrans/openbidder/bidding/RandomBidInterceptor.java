@@ -108,7 +108,7 @@ public class RandomBidInterceptor implements BidInterceptor {
             }
         }, 0, 5000);
 
-        logger.error("Finished Constructing the SimpleBidInterceptor....");
+        logger.error("Finished Constructing the RandomBidInterceptor....");
                 
         
     }
@@ -133,7 +133,8 @@ public class RandomBidInterceptor implements BidInterceptor {
                         .setAdid("1") //get from database
                         .setNurl("http://m.mobileacademy.com?campaignid=1&forcedPage=727") //get from database
                         .setAdm("<a href=\\\"http://ads.com/click/112770_1386565997\\\"><img src=\\\"http://ads.com/img/112770_1386565997?won=${AUCTION_PRICE}\\\" width=\\\"728\\\" height=\\\"90\\\" border=\\\"0\\\" alt=\\\"Advertisement\\\" /></a>") //get from database
-                        .setAdomain(0,"mobileacademy.com")
+                        //.setAdomain(0,"mobileacademy.com")
+                        .addAdomain("mobileacademy.com")
                         .setIurl("http://m.mobileacademy.com/banerimg.jpg")
                         .setCid("1")//Campaign id
                         .setCrid("1")//Creative id

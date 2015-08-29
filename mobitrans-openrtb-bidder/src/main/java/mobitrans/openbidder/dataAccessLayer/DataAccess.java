@@ -21,7 +21,8 @@ import java.util.List;
  */
 public class DataAccess {
 
-    private final String BaseUrl = "http://imp.mli.me/";
+    //private final String BaseUrl = "http://imp.mli.me/";
+    private final String BaseUrl = "http://mobitrans.openrtb.com:8080/";
 
     public List<Creative> GetCreatives() {
         String RequestUrl = "api/data/creatives";

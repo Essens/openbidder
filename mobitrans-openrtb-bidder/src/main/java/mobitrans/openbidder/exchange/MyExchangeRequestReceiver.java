@@ -25,19 +25,20 @@ import com.google.openbidder.http.HttpReceiverContext;
 import com.google.openbidder.http.util.HttpUtil;
 import com.google.openrtb.mapper.OpenRtbMapper;
 import com.google.openrtb.snippet.OpenRtbSnippetProcessor;
-
 import com.codahale.metrics.MetricRegistry;
-
+import com.google.openrtb.json.OpenRtbJsonFactory;
+import com.google.protobuf.ByteString;
 import org.apache.http.HttpStatus;
-
 import javax.inject.Inject;
 import javax.inject.Singleton;
+import com.google.openrtb.json.*;
+
 
 @Singleton public class MyExchangeRequestReceiver
 extends RequestReceiver<BidController> {
   private final OpenRtbSnippetProcessor snippetProcessor;
   private final OpenRtbMapper<String, String, StringBuilder, StringBuilder> mapper;
-
+ 
   @Inject public MyExchangeRequestReceiver(
       MetricRegistry metricsRegistry,
       BidController controller,
@@ -74,8 +75,8 @@ extends RequestReceiver<BidController> {
         if (!response.openRtb().hasId()) {
           response.openRtb().setId(request.openRtb().getId());
         }
-        ctx.httpResponse().printContent(
-            mapper.toExchangeBidResponse(request.openRtb(), response.openRtb().build()).toString());
+        ctx.httpResponse().printContent(mapper.toExchangeBidResponse(request.openRtb(), response.openRtb().build()).toString());
+     
       } else {
         ctx.httpResponse().printContent(((StringBuilder) response.nativeResponse()).toString());
       }
