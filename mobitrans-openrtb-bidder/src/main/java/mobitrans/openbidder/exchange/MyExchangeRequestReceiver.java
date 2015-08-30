@@ -35,6 +35,7 @@ import com.google.openrtb.json.*;
 import com.google.openrtb.snippet.SnippetProcessor;
 import mobitrans.openbidder.openrtbexchange.MyOpenRtbExchangeExtBannerReader;
 import mobitrans.openbidder.openrtbexchange.MyOpenRtbExchangeExtBannerWriter;
+import com.fasterxml.jackson.core.*;
 
 
 @Singleton public class MyExchangeRequestReceiver
@@ -78,10 +79,12 @@ extends RequestReceiver<BidController> {
         if (!response.openRtb().hasId()) {
           response.openRtb().setId(request.openRtb().getId());
         }
-        ctx.httpResponse().printContent(mapper.toExchangeBidResponse(request.openRtb(), response.openRtb().build()).toString());
+        //ctx.httpResponse().printContent(mapper.toExchangeBidResponse(request.openRtb(), response.openRtb().build()).toString());
         // How to serialize
         //https://github.com/google/openrtb/wiki
-
+        OpenRtbJsonFactory openrtbJson = OpenRtbJsonFactory.create();
+        String jsonRes = openrtbJson.newWriter().writeBidResponse(response.openRtb().build());
+        ctx.httpResponse().printContent(jsonRes);
         
       } else {
         ctx.httpResponse().printContent(((StringBuilder) response.nativeResponse()).toString());
