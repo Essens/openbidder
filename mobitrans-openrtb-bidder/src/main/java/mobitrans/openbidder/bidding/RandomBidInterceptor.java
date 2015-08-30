@@ -131,7 +131,7 @@ public class RandomBidInterceptor implements BidInterceptor {
                         .setImpid(imp.getId())
                         .setPrice(imp.getBidfloor())
                         .setAdid("1") //get from database
-                        .setNurl("http://m.mobileacademy.com?campaignid=1&forcedPage=727") //get from database
+                        .setNurl("http://m.mobileacademy.com?campaignid=1&forcedPage=727") //Win notice URL called by the exchange if the bid wins
                         .setAdm("<a href=\\\"http://ads.com/click/112770_1386565997\\\"><img src=\\\"http://ads.com/img/112770_1386565997?won=${AUCTION_PRICE}\\\" width=\\\"728\\\" height=\\\"90\\\" border=\\\"0\\\" alt=\\\"Advertisement\\\" /></a>") //get from database
                         //.setAdomain(0,"mobileacademy.com")
                         .addAdomain("mobileacademy.com")
